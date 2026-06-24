@@ -29,7 +29,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import FancyArrowPatch
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
-OUTPUT_DIR = ROOT / "latex_paper" / "figures"
+OUTPUT_DIR = ROOT / "figures"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 RESULT_DIR = ROOT / "results" / "supplement_20260522" / "scale_experiments" / "scale_5000_agents"

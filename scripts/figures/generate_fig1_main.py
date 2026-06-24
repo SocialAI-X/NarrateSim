@@ -7,7 +7,7 @@ Lines: Baseline + per-topic top strategies covering the strongest stance harm
 and the strongest emotional negativity (ENI) harm.
 95% CI: agent-level SEM for stance; Wilson intervals for cumulative ENI.
 
-Outputs: latex_paper/figures/fig_study1_trajectories.{pdf,png}
+Outputs: figures/fig_study1_trajectories.{pdf,png}
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 RESULTS_BASE = ROOT / "results" / "full_study_20260521_v3"
-OUTPUT_DIR = ROOT / "latex_paper" / "figures"
+OUTPUT_DIR = ROOT / "figures"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 TOPICS = [

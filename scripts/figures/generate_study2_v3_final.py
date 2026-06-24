@@ -19,7 +19,7 @@ import matplotlib.patches as mpatches
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 RESULTS = ROOT / "results" / "full_study_20260521_v3"
-OUT = ROOT / "latex_paper" / "figures"
+OUT = ROOT / "figures"
 OUT.mkdir(exist_ok=True)
 
 Z = 1.96; SMIN, SMAX = -5, 5

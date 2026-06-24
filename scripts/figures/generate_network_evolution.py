@@ -25,7 +25,7 @@ from matplotlib.colors import Normalize, to_rgba
 
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
-OUTPUT_DIR = ROOT / "latex_paper" / "figures"
+OUTPUT_DIR = ROOT / "figures"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 STAGES = [

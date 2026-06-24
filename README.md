@@ -10,11 +10,11 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](requirements.txt)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
-[![Paper](https://img.shields.io/badge/paper-EMNLP%20submission-8B5CF6?style=for-the-badge)](latex_paper/main.tex)
+[![Results](https://img.shields.io/badge/results-64%20experiments-8B5CF6?style=for-the-badge)](results/)
 
 <br>
 
-[Quick Start](#-quick-start) · [Experiments](#-experiments) · [Results](#-results) · [Paper](#-paper) · [中文](README_zh.md)
+[Quick Start](#-quick-start) · [Experiments](#-experiments) · [Results](#-results) · [Figures](#-figures) · [中文](README_zh.md)
 
 </div>
 
@@ -130,7 +130,7 @@ python scripts/figures/generate_scale5000_network.py
 
 ## Results
 
-Pre-computed **summary metrics** are included for all paper experiments:
+Full experiment outputs are included — **summary metrics** and **raw dialogue logs**:
 
 ```
 results/
@@ -138,6 +138,7 @@ results/
 │   ├── manifest.json           # Full config snapshot
 │   ├── all_summaries.json      # Aggregated metrics
 │   └── <experiment>/
+│       ├── results.json        # Full dialogue + BDI chain-of-thought
 │       ├── summary.json        # Stance & polarization metrics
 │       ├── emotion_analysis.json
 │       └── config.json
@@ -145,13 +146,17 @@ results/
     └── scale_experiments/      # N = 200, 500, 1k, 2k, 5k
 ```
 
-> Raw dialogue logs (`results.json`, ~100+ MB each) are **not** included in this repository. Contact the authors for full transcripts.
-
 ---
 
-## Paper
+## Figures
 
-The LaTeX source and compiled figures are in [`latex_paper/`](latex_paper/). A Chinese translation is available in [`latex_paper_cn/`](latex_paper_cn/).
+Publication figures and generation scripts are included (LaTeX paper source is **not** in this repo).
+
+| Path | Description |
+|------|-------------|
+| [`figures/`](figures/) | 8 final publication figures (PDF) |
+| [`paper_figures/`](paper_figures/) | Full figure workspace (drafts + variants) |
+| [`scripts/figures/`](scripts/figures/) | Regeneration scripts |
 
 | Figure | Description |
 |--------|-------------|
@@ -160,10 +165,6 @@ The LaTeX source and compiled figures are in [`latex_paper/`](latex_paper/). A C
 | `fig_network_topology` | Network structure amplifies attack reach |
 | `fig_scale5k_evolution` | 5,000-agent scale validation |
 | `fig_micro_case` | Qualitative agent trajectory case study |
-
-```bash
-cd latex_paper && latexmk -pdf main.tex
-```
 
 ---
 
@@ -191,9 +192,9 @@ NarrateSim/
 ├── run_supplement.py       # Scale & supplementary experiments
 ├── run_emotions.py         # Batch emotion analysis
 ├── scripts/figures/        # Paper figure generators
-├── results/                # Pre-computed summaries
-├── latex_paper/            # English paper source
-└── latex_paper_cn/         # Chinese translation
+├── figures/                # Final publication figures (PDF)
+├── paper_figures/          # Figure workspace & variants
+└── results/                # Full experiment outputs + dialogue logs
 ```
 
 ---

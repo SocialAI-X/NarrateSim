@@ -9,12 +9,12 @@
 <br>
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](requirements.txt)
-[![论文](https://img.shields.io/badge/论文-EMNLP%20投稿-8B5CF6?style=for-the-badge)](latex_paper_cn/main.tex)
+[![Results](https://img.shields.io/badge/结果-64组实验-8B5CF6?style=for-the-badge)](results/)
 [![English](https://img.shields.io/badge/English-README-2563EB?style=for-the-badge)](README.md)
 
 <br>
 
-[快速开始](#-快速开始) · [实验设计](#-实验设计) · [结果数据](#-结果数据) · [论文](#-论文)
+[快速开始](#-快速开始) · [实验设计](#-实验设计) · [结果数据](#-结果数据) · [图表](#-图表)
 
 </div>
 
@@ -147,7 +147,7 @@ python scripts/figures/generate_scale5000_network.py
 
 ## 结果数据
 
-仓库中包含所有论文实验的 **汇总指标**（不含原始对话日志）：
+仓库包含论文实验的 **完整输出**——汇总指标与 **原始对话日志**：
 
 ```
 results/
@@ -155,6 +155,7 @@ results/
 │   ├── manifest.json           # 完整配置快照
 │   ├── all_summaries.json      # 聚合指标
 │   └── <实验名>/
+│       ├── results.json        # 完整对话 + BDI 思维链
 │       ├── summary.json        # 立场与极化指标
 │       ├── emotion_analysis.json
 │       └── config.json
@@ -162,14 +163,17 @@ results/
     └── scale_experiments/      # N = 200 ~ 5000
 ```
 
-> 原始对话数据（`results.json`，每组约 100+ MB）未包含在仓库中。如需完整对话记录，请联系作者。
-
 ---
 
-## 论文
+## 图表
 
-- 英文原文：[`latex_paper/`](latex_paper/)
-- 中文翻译：[`latex_paper_cn/`](latex_paper_cn/)
+论文相关图表及生成脚本已包含（LaTeX 论文源码 **不在** 本仓库中）。
+
+| 路径 | 说明 |
+|------|------|
+| [`figures/`](figures/) | 8 张最终论文图（PDF） |
+| [`paper_figures/`](paper_figures/) | 完整图表工作区（草稿与变体） |
+| [`scripts/figures/`](scripts/figures/) | 图表重生成脚本 |
 
 | 图表 | 内容 |
 |------|------|
@@ -178,10 +182,6 @@ results/
 | `fig_network_topology` | 网络结构放大攻击影响 |
 | `fig_scale5k_evolution` | 5000 智能体规模验证 |
 | `fig_micro_case` | 个体智能体轨迹案例分析 |
-
-```bash
-cd latex_paper_cn && xelatex main.tex
-```
 
 ---
 
@@ -209,9 +209,9 @@ NarrateSim/
 ├── run_supplement.py       # 规模与补充实验
 ├── run_emotions.py         # 批量情绪分析
 ├── scripts/figures/        # 论文图表生成
-├── results/                # 预计算汇总指标
-├── latex_paper/            # 英文论文
-└── latex_paper_cn/         # 中文翻译
+├── figures/                # 最终论文图（PDF）
+├── paper_figures/          # 图表工作区与变体
+└── results/                # 完整实验输出与对话日志
 ```
 
 ---
