@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.03,
+  "neg_shift_rate": 0.13,
+  "flip_rate": 0.034482758620689655,
+  "negativity_ratio": 0.2,
+  "large_change_rate": 0.04,
+  "final_mean": 1.21,
+  "final_std": 1.801638143468327,
+  "init_mean": 1.18,
+  "elapsed_s": 3169.4,
+  "name": "main_immigration_baseline",
+  "study": "main"
+}

@@ -1,0 +1,13 @@
+{
+  "mean_shift": -2.688888888888889,
+  "neg_shift_rate": 0.8777777777777778,
+  "flip_rate": 0.5949367088607594,
+  "negativity_ratio": 0.8777777777777778,
+  "large_change_rate": 0.7222222222222222,
+  "final_mean": -1.5222222222222221,
+  "final_std": 1.335230132289127,
+  "init_mean": 1.1666666666666667,
+  "elapsed_s": 5158.4,
+  "name": "dose_vaccine_victim_narrative_n10",
+  "study": "dose_response"
+}

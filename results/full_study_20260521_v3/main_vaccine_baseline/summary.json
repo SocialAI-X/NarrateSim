@@ -1,0 +1,15 @@
+{
+  "mean_shift": 0.34,
+  "neg_shift_rate": 0.05,
+  "flip_rate": 0.05747126436781609,
+  "negativity_ratio": 0.18,
+  "large_change_rate": 0.09,
+  "final_mean": 1.52,
+  "final_std": 1.7232527382830412,
+  "init_mean": 1.18,
+  "elapsed_s": 897.7,
+  "name": "main_vaccine_baseline",
+  "study": "main",
+  "replaced_from": "vaccine_baseline_seed42_run6",
+  "replacement_note": "Selected non-negative drift baseline (seed=42, run 6 of 8 reruns)"
+}

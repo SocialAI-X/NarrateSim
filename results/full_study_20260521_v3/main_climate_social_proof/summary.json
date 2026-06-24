@@ -1,0 +1,13 @@
+{
+  "mean_shift": -0.08247422680412371,
+  "neg_shift_rate": 0.1958762886597938,
+  "flip_rate": 0.023529411764705882,
+  "negativity_ratio": 0.2268041237113402,
+  "large_change_rate": 0.030927835051546393,
+  "final_mean": 1.0824742268041236,
+  "final_std": 1.8648683825909238,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 5574.1,
+  "name": "main_climate_social_proof",
+  "study": "main"
+}

@@ -1,0 +1,11 @@
+openai>=1.30.0
+networkx>=3.2
+numpy>=1.26
+faker>=25.0
+asyncio-throttle>=1.0
+aiofiles>=23.0
+pydantic>=2.5
+tqdm>=4.66
+matplotlib>=3.8
+seaborn>=0.13
+pandas>=2.1

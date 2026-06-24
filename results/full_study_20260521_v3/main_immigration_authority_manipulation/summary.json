@@ -1,0 +1,13 @@
+{
+  "mean_shift": -1.175257731958763,
+  "neg_shift_rate": 0.6288659793814433,
+  "flip_rate": 0.1411764705882353,
+  "negativity_ratio": 0.4020618556701031,
+  "large_change_rate": 0.35051546391752575,
+  "final_mean": -0.010309278350515464,
+  "final_std": 1.7080455181217413,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 3767.9,
+  "name": "main_immigration_authority_manipulation",
+  "study": "main"
+}

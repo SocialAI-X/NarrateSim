@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.29,
+  "neg_shift_rate": 0.02,
+  "flip_rate": 0.04597701149425287,
+  "negativity_ratio": 0.18,
+  "large_change_rate": 0.07,
+  "final_mean": 1.47,
+  "final_std": 1.7689262279699511,
+  "init_mean": 1.18,
+  "elapsed_s": 3250.1,
+  "name": "main_climate_baseline",
+  "study": "main"
+}

@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.13,
+  "neg_shift_rate": 0.09,
+  "flip_rate": 0.034482758620689655,
+  "negativity_ratio": 0.19,
+  "large_change_rate": 0.08,
+  "final_mean": 1.31,
+  "final_std": 1.635206408989397,
+  "init_mean": 1.18,
+  "elapsed_s": 3317.5,
+  "name": "pop_low_analytical_baseline",
+  "study": "strategy_population"
+}

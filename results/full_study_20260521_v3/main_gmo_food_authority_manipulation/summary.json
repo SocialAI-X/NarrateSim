@@ -1,0 +1,13 @@
+{
+  "mean_shift": -2.0721649484536084,
+  "neg_shift_rate": 0.865979381443299,
+  "flip_rate": 0.38823529411764707,
+  "negativity_ratio": 0.6907216494845361,
+  "large_change_rate": 0.6288659793814433,
+  "final_mean": -0.9072164948453608,
+  "final_std": 1.8053898355437312,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 3139.3,
+  "name": "main_gmo_food_authority_manipulation",
+  "study": "main"
+}

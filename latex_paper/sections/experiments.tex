@@ -1,0 +1,93 @@
+\section{Experiments}
+\label{sec:experiments}
+
+We run multi-agent simulations in \textbf{NarrateSim} to probe how narrative attacks distort discussion. After describing the shared configuration and metrics, we report three studies covering strategy effects across topics (Study~1), audience matching (Study~2), and interventions (Study~3).
+
+\input{sections/tab_main}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=0.95\textwidth]{fig_study1_trajectories.pdf}
+  \caption{Round-by-round mean stance (top row) and cumulative negative-emotion intensity ENI (bottom row) for six strategies across four topics. The $x$-axis is simulation round; higher ENI indicates a more negative emotional climate. Pseudo-Rational and Authority Manipulation produce sustained stance drops on Vaccine and GMO; Victim Narrative drives uniformly steep ENI climbs regardless of topic.}
+  \label{fig:trajectories}
+\end{figure*}
+
+\subsection{Setup}
+
+Each simulation places $N{=}100$ normal agents on a Barab\'{a}si--Albert network with attachment parameter $m{=}3$~\citep{Barabasi1999} and runs for $T{=}15$ synchronous rounds. All agents are driven by DeepSeek-V3.2.\footnote{\url{https://huggingface.co/deepseek-ai/DeepSeek-V3.2}; 671B parameters.} Every treatment is paired with a matched baseline run on the same topic, same population, and same network seed, so that reported effects reflect within-cell contrasts.
+
+\paragraph{Stance metrics.}
+Stance metrics are computed on the agent stance vector $\{s_T^{(i)}\}_{i=1}^N$:
+\begin{equation}
+\begin{aligned}
+\bar{s}_T &= \tfrac{1}{N}\textstyle\sum_i s_T^{(i)},\quad
+\Delta\bar{s} = \bar{s}_T - \bar{s}_0,\\
+\text{NSR} &= \tfrac{1}{N}\bigl|\{i : s_T^{(i)} < s_0^{(i)}\}\bigr|.
+\end{aligned}
+\end{equation}
+$\Delta\bar{s}$ thus captures the within-run shift from the initial group mean to the final one; negative values indicate net movement toward the attacker's goal. For intervention evaluation we additionally use \emph{Flip} (the fraction crossing into opposition), \emph{Shift} (the fraction moving down by at least one point), and a \emph{Protection} score relative to the unprotected control.
+
+\paragraph{Emotion metrics.}
+Emotion metrics are computed on per-message labels $\{e_t^{(i)}\}$ aggregated into positive and negative shares $P_+$ and $P_-$:
+\begin{equation}
+\text{EV} = \frac{P_+ - P_-}{P_+ + P_-},\quad
+\text{ENI} = \frac{P_-}{P_+ + P_-}.
+\end{equation}
+Labels are produced by DeepSeek-V3.2 over the eight Plutchik categories~\citep{Plutchik1980,MohammadTurney2013,Mohammad2018} using a few-shot prompt with calibration examples that mark policy disagreement as neutral rather than anger. Recent LLM-as-classifier benchmarks have shown this separation to be reliable when prompts are carefully designed~\citep{Zhang2024Sentiment,Tu2023ChatGPT}.
+
+
+\subsection{Study 1: Strategies Across Topics}
+\label{sec:study1}
+
+Study~1 asks how narrative strategies disrupt discussion when both topic and strategy are varied as factors. We cross six strategies (\emph{pseudo-rational scepticism}~\citep{Ecker2022}, \emph{victim narrative}~\citep{Green2000}, \emph{fear appeal}~\citep{Witte1992}, \emph{conspiracy theory}~\citep{Douglas2017}, \emph{authority manipulation}~\citep{Cialdini2001}, and \emph{social proof}~\citep{Asch2016,Cialdini2001}) with four diverse topics (\emph{Vaccine Mandate}, \emph{Climate Policy}, \emph{Immigration}, \emph{GMO Food Safety}) under a representative population (each belief dimension drawn from $\mathcal{N}(5.5, 2.0)$). Each simulation embeds three narrative attackers (\S\ref{sec:malicious}), and the full $4 \times 6$ matrix appears in Table~\ref{tab:main} and Figure~\ref{fig:trajectories}.
+
+\paragraph{Pseudo-Rational and Authority Manipulation hit contested topics hardest.}
+Three narrative attackers in a network of 100 agents are already enough to cause substantial group-level damage on the most vulnerable topics. In a scale-free network, even a few nodes can reach most of the population within two hops, and their framing gets re-amplified by hub neighbours. On Vaccine Mandate and GMO Food, Pseudo-Rational and Authority Manipulation produce nearly identical stance shifts (both $\Delta\bar{s}\approx{-}2$ with negative-shift rates above 85\%), and their trajectories drop below zero by Round~9 and stay there rather than swinging back (Figure~\ref{fig:trajectories}, top row). Despite looking very different on the surface, the two strategies converge because both redirect attention from the topic itself to what credentialed sources allegedly say, exploiting the same trust pathway.
+
+\paragraph{Victim Narrative is the most generalisable disruptor.}
+Across the four topics, Victim Narrative produces the largest emotion effect in every column, and its ENI varies in a remarkably tight range. The bottom row of Figure~\ref{fig:trajectories} shows ENI climbing from Round~1 and staying high as moral outrage spreads through replies. Unlike evidence-based strategies, personal suffering stories do not make falsifiable claims. Instead, they appeal to empathy, a response that is largely independent of topic familiarity. This is why Victim Narrative is the only condition that maintains a meaningful stance pull on every topic, including ones where every other strategy fails.
+
+\paragraph{Two contrasting attack types emerge.}
+On Climate, every strategy lands close to baseline because the discourse is already saturated with apocalyptic and sceptical framings, leaving little new information for an attacker to exploit. Across the four topics, the strategies separate into two kinds. Pseudo-Rational and Authority Manipulation reshape group stance through evidence and institutional credentials, and succeed only when the topic still carries genuine uncertainty. Victim Narrative operates through emotional contagion and raises the thread's temperature uniformly regardless of topic saturation. Study~2 examines how each kind of attack responds to audience composition.
+
+
+\subsection{Study 2: Strategy--Population Matching}
+\label{sec:study2}
+
+If trust-targeting strategies really work through epistemic trust, their effect should depend on the trust profile of the audience. Study~2 tests this by holding the topic fixed (Vaccine Mandate) and varying the population along a single belief dimension at a time, producing six targeted populations along trust ($D_1$), care-fairness ($D_2$), loyalty-authority ($D_3$), and analytical-thinking ($D_5$) axes. We pair five strategies from Study~1 with theoretically matched and mismatched audiences (Figure~\ref{fig:study2_ranking}).
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig_study2_ranking.pdf}
+  \caption{Strategy--population matching on Vaccine Mandate. Panel~(a): $\Delta\bar{s}$; panel~(b): NSR. Matched strategy--audience pairs cluster at the top; mismatched pairs fall toward the baseline, confirming that attack efficacy is audience-contingent.}
+  \label{fig:study2_ranking}
+\end{figure}
+
+\paragraph{Strategy success follows audience trust profile, in opposite directions.}
+Pseudo-Rational does its most damage on the Low-Trust population, where it reinforces an existing tendency toward institutional doubt. The same content barely moves the High-Trust population. Authority Manipulation shows the mirror pattern, peaking against High-Trust and weakening against Low-Trust. The two strategies therefore work on opposite ends of the same trust axis, so any defence tuned to one end leaves the other exposed. The remaining mismatched cells stay close to the baseline, indicating that strategies that fail on first impression rarely recover through repeated interaction.
+
+\paragraph{Victim Narrative reaches even analytical audiences.}
+Against the High-Empathy population, Victim Narrative produces the expected match. More striking is its effect on the High-Analytical population, which should be most resistant to emotional content yet shows a comparable stance shift, and in some seeds even larger, than the matched empathic audience. Analytical disposition alone therefore does not filter out moral testimony. Victim Narrative remains the strongest cross-population disruptor in our setup, motivating the focused intervention experiments in Study~3.
+
+
+\subsection{Study 3: Interventions Against Victim Narratives}
+\label{sec:study3}
+
+Study~3 asks whether timed interventions can reduce the damage of the most consistently harmful strategy. Using the most damaging unprotected configuration (Vaccine Mandate, representative population, Victim Narrative attack) as a stress test, we compare six interventions plus a no-intervention control. Pre-emptive interventions begin in Round~0--1 and try to build resistance before the narrative arrives. Reactive ones activate after the discussion has noticeably shifted (Round~3--5) and try to repair it (Table~\ref{tab:intervention}).
+
+\input{sections/tab_intervention}
+
+\paragraph{Pre-bunking almost neutralises the attack while a self-reflection prompt backfires.}
+Showing agents the structure of victim-style manipulation before discussion begins reduces $\Delta\bar{s}$ from the control value of $-1.57$ to $-0.45$, brings final stance back into the positive range, and yields a protection score of 71.3\%, more than triple the best reactive option. This is consistent with the pre-bunking literature showing that brief structural exposure produces durable resistance~\citep{McGuire1964,Roozenbeek2019,vanderLinden2017}. The other pre-emptive condition tells the opposite story. Asking agents to reflect on whether their stance changes are driven by evidence or social pressure is the only intervention that clearly backfires. The reason is that reflection reframes the agent's task from defending its current position to questioning it, and on a timeline dominated by victim narratives this amplifies the most emotionally affecting recent message instead of protecting against it.
+
+\paragraph{Reactive interventions slow further damage but cannot reverse it.}
+Community reporting is the strongest reactive option (protection~$\sim$22\%), followed by delayed pre-bunking and fact-checking. The longer agents remain exposed, the less recoverable the damage. Reactive measures curb further drift but cannot restore the original state. Delayed pre-bunking outperforms fact-checking, confirming that structural awareness of manipulation matters more than corrective facts when harm operates through moral framing.
+
+Figure~\ref{fig:micro_case} traces a representative agent with and without pre-bunking. In the unprotected run, the agent absorbs successive victim stories, drifts steadily downward through Rounds~3--9, and settles at $-3$. The pre-bunked counterpart receives identical messages but enters with a structural understanding of victim-narrative tactics. It dips briefly to zero at the most intense story yet recovers, because the pre-installed frame provides a competing interpretation. Pre-bunking does not silence content but equips the agent with a durable lens that it re-applies on its own.
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=0.88\textwidth]{fig_micro_case.pdf}
+  \caption{Stance trajectory of a single agent under Victim Narrative attack, without intervention (top) and with cognitive pre-bunking (bottom). Selected messages illustrate reasoning at key inflection points. Pre-bunking installs a competing interpretive frame that the agent re-applies autonomously, preventing sustained downward drift.}
+  \label{fig:micro_case}
+\end{figure*}

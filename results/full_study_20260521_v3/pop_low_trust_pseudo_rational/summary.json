@@ -1,0 +1,12 @@
+{
+  "mean_shift": -2.082474226804124,
+  "neg_shift_rate": 0.8144329896907216,
+  "flip_rate": 0.43529411764705883,
+  "negativity_ratio": 0.711340206185567,
+  "large_change_rate": 0.5979381443298969,
+  "final_mean": -0.9175257731958762,
+  "final_std": 1.4407193441878907,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 1778.8,
+  "name": "pop_low_trust_pseudo_rational"
+}

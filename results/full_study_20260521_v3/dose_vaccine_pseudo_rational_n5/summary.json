@@ -1,0 +1,13 @@
+{
+  "mean_shift": -2.2526315789473683,
+  "neg_shift_rate": 0.8526315789473684,
+  "flip_rate": 0.5,
+  "negativity_ratio": 0.7684210526315789,
+  "large_change_rate": 0.6526315789473685,
+  "final_mean": -1.0526315789473684,
+  "final_std": 1.6050474402080954,
+  "init_mean": 1.2,
+  "elapsed_s": 3172.7,
+  "name": "dose_vaccine_pseudo_rational_n5",
+  "study": "dose_response"
+}

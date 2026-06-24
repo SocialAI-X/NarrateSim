@@ -1,0 +1,11 @@
+\section{Topics, Populations, and Intervention Deployment}
+\label{app:impl}
+
+\paragraph{Topics.}
+The four topics used in the main studies and the dose-response and scaling analyses are operationalised through short policy descriptions and a stance scale anchored at $-5$ (strongly against) and $+5$ (strongly in favour). \emph{Vaccine Mandate}: should governments mandate vaccinations for public-sector employment and school attendance. \emph{Climate Policy}: should governments aggressively pursue green energy transition and carbon pricing despite economic costs. \emph{Immigration}: should countries adopt more open immigration policies that expand legal pathways and refugee admission. \emph{GMO Food Safety}: should genetically modified food be widely adopted under current oversight or rejected as corporate-controlled risk. The full topic descriptions are released with the configurations.
+
+\paragraph{Population profiles.}
+The representative population samples each belief dimension from $\mathcal{N}(5.5, 2.0)$, clipped to $[1, 10]$. Targeted populations primarily vary the indicated belief dimension; remaining dimensions stay at the representative distribution unless noted: \emph{low-trust} sets $D_1 \sim \mathcal{N}(3.0, 1.0)$, \emph{high-trust} sets $D_1 \sim \mathcal{N}(8.0, 1.0)$, \emph{high-empathy} sets $D_2 \sim \mathcal{N}(8.0, 1.0)$, \emph{authoritarian} sets $D_3 \sim \mathcal{N}(8.0, 1.0)$, \emph{high-analytical} sets $D_5 \sim \mathcal{N}(8.0, 1.0)$, \emph{low-analytical} sets $D_5 \sim \mathcal{N}(3.0, 1.0)$. Initial stances are sampled from $\mathcal{N}(1.5, 1.5)$ and rounded to integers in $[-5, +5]$, mirroring a population that mildly supports the mainstream policy direction at the start of discussion.
+
+\paragraph{Intervention deployment.}
+Pre-emptive interventions (pre-bunking, metacognitive reflection) are deployed by appending an additional belief description to the agent's system prompt at simulation start; the appended text is shared with the agent itself so the agent reasons \emph{as} someone with that disposition rather than being externally instructed. Reactive interventions (fact-checking, delayed pre-bunking, community reporting, sentiment transparency) are injected as labelled context blocks in the user prompt during the configured round window.

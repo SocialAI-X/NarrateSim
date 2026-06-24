@@ -1,0 +1,13 @@
+{
+  "mean_shift": -0.8556701030927835,
+  "neg_shift_rate": 0.5773195876288659,
+  "flip_rate": 0.08333333333333333,
+  "negativity_ratio": 0.3402061855670103,
+  "large_change_rate": 0.29896907216494845,
+  "final_mean": 0.31958762886597936,
+  "final_std": 1.7382678411804109,
+  "init_mean": 1.175257731958763,
+  "elapsed_s": 5854.7,
+  "name": "net_dense_random",
+  "study": "network"
+}

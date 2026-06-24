@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.49,
+  "neg_shift_rate": 0.04,
+  "flip_rate": 0.11494252873563218,
+  "negativity_ratio": 0.14,
+  "large_change_rate": 0.17,
+  "final_mean": 1.67,
+  "final_std": 1.6973803345155143,
+  "init_mean": 1.18,
+  "elapsed_s": 3327.3,
+  "name": "pop_authoritarian_baseline",
+  "study": "strategy_population"
+}

@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.22,
+  "neg_shift_rate": 0.12,
+  "flip_rate": 0.04597701149425287,
+  "negativity_ratio": 0.19,
+  "large_change_rate": 0.08,
+  "final_mean": 1.4,
+  "final_std": 1.70293863659264,
+  "init_mean": 1.18,
+  "elapsed_s": 1682.4,
+  "name": "net_baseline",
+  "study": "network"
+}

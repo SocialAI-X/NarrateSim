@@ -1,0 +1,19 @@
+{
+  "mean_shift": -1.7489795918367348,
+  "neg_shift_rate": 0.7693877551020408,
+  "flip_rate": 0.3215130023640662,
+  "negativity_ratio": 0.5816326530612245,
+  "large_change_rate": 0.5326530612244897,
+  "final_mean": -0.47346938775510206,
+  "final_std": 1.6401562282735518,
+  "init_mean": 1.2755102040816326,
+  "elapsed_s": 6087.5,
+  "name": "scale_500_agents",
+  "n_agents": 500,
+  "n_malicious": 10,
+  "n_rounds": 15,
+  "network_edges": 1491,
+  "avg_degree": 5.96,
+  "llm_calls": 7510,
+  "llm_errors": 0
+}

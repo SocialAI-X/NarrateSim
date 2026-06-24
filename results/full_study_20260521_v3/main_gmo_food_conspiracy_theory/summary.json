@@ -1,0 +1,13 @@
+{
+  "mean_shift": -1.907216494845361,
+  "neg_shift_rate": 0.845360824742268,
+  "flip_rate": 0.3176470588235294,
+  "negativity_ratio": 0.6082474226804123,
+  "large_change_rate": 0.5670103092783505,
+  "final_mean": -0.7422680412371134,
+  "final_std": 1.7307310326955307,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 3208.3,
+  "name": "main_gmo_food_conspiracy_theory",
+  "study": "main"
+}

@@ -1,0 +1,13 @@
+{
+  "mean_shift": -0.9690721649484536,
+  "neg_shift_rate": 0.6082474226804123,
+  "flip_rate": 0.15294117647058825,
+  "negativity_ratio": 0.422680412371134,
+  "large_change_rate": 0.30927835051546393,
+  "final_mean": 0.1958762886597938,
+  "final_std": 1.966938985933785,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 3065.7,
+  "name": "main_gmo_food_social_proof",
+  "study": "main"
+}

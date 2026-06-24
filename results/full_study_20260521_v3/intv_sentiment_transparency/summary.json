@@ -1,0 +1,13 @@
+{
+  "mean_shift": -1.6185567010309279,
+  "neg_shift_rate": 0.7525773195876289,
+  "flip_rate": 0.23529411764705882,
+  "negativity_ratio": 0.5051546391752577,
+  "large_change_rate": 0.4948453608247423,
+  "final_mean": -0.4536082474226804,
+  "final_std": 1.5399867354944947,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 2446.8,
+  "name": "intv_sentiment_transparency",
+  "study": "intervention"
+}

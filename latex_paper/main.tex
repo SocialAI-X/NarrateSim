@@ -1,0 +1,63 @@
+% EMNLP 2025 submission: Narrative Disruption in LLM Social Networks
+\documentclass[11pt]{article}
+
+\usepackage[review]{acl}
+\makeatletter
+\renewcommand\outauthor{%
+  \begin{tabular}[t]{c}
+  \ifacl@anonymize
+    \bfseries Anonymous EMNLP Submission
+  \else
+    \bfseries\@author
+  \fi
+  \end{tabular}}
+\makeatother
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{threeparttable}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{float}
+\usepackage[most]{tcolorbox}
+
+\definecolor{rowalt}{HTML}{F5F5F5}
+\definecolor{rowbest}{HTML}{EEF5EF}
+\definecolor{rowwarn}{HTML}{F7F1F1}
+\definecolor{peak}{HTML}{FFF3E0}
+
+\graphicspath{{figures/}}
+
+\title{How Malicious Agents Disrupt Online Discussion:\\
+  Simulating Narrative Attacks in LLM-Based Social Networks}
+
+\author{Anonymous EMNLP Submission}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/method}
+\input{sections/experiments}
+\input{sections/discussion}
+\input{sections/conclusion}
+\input{sections/limitations}
+\input{sections/ethics}
+
+\bibliography{bib/references}
+
+\appendix
+\input{sections/appendix}
+
+\end{document}

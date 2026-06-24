@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# IDE / editor
+.cursorignore
+.vscode/
+.idea/
+
+# Logs and scratch output
+logs_*.txt
+*_output.txt
+dusk_output.txt
+fern_output.txt
+fluct_output.txt
+_dialogue_samples.txt
+showcase_cases_v3.md
+
+# One-off / legacy scripts (kept locally, not published)
+_run_*.py
+_explore_*.py
+mine_*.py
+extract_*.py
+run_all.py
+run_full_study.py
+run_resume.py
+run_full_evaluation.py
+run_main_table.py
+run_pilot.py
+run_extensions.py
+run_replication.py
+run_emotions_only.py
+generate_configs.py
+generate_extension_configs.py
+generate_main_table_configs.py
+generate_paper_figures.py
+generate_plots.py
+generate_study2_v3_figures.py
+generate_study2_population_strategy_figures.py
+finish_main_table_v2.py
+
+# Draft figure workspace (final figures live in latex_paper/figures/)
+paper_figures/
+
+# Legacy LaTeX drafts
+latex_demo/
+
+# Exploratory experiments
+exploratory/
+
+# Generated configs (paper runner generates configs inline)
+configs/
+
+# API docs with credentials
+docs/大模型api.md
+
+# Local cache
+.cache/
+
+# Large raw experiment outputs
+results/**/results.json
+results/**/run.log
+results/**/plots/
+results/cross_topic/
+results/evaluation/
+results/supplement_20260522/vaccine_baseline_seed42_reruns/
+results/run_summary.json
+results/micro_analysis.txt
+results/main_table_v2_fixed/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.blg
+*.out
+*.bbl
+*.toc
+*.lof
+*.lot
+anthology.bib.txt

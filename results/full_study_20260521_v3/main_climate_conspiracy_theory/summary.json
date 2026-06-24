@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.010309278350515464,
+  "neg_shift_rate": 0.1958762886597938,
+  "flip_rate": 0.03529411764705882,
+  "negativity_ratio": 0.23711340206185566,
+  "large_change_rate": 0.07216494845360824,
+  "final_mean": 1.175257731958763,
+  "final_std": 1.7051184877554926,
+  "init_mean": 1.1649484536082475,
+  "elapsed_s": 4121.4,
+  "name": "main_climate_conspiracy_theory",
+  "study": "main"
+}

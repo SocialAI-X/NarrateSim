@@ -1,0 +1,13 @@
+{
+  "mean_shift": 0.14,
+  "neg_shift_rate": 0.11,
+  "flip_rate": 0.034482758620689655,
+  "negativity_ratio": 0.21,
+  "large_change_rate": 0.08,
+  "final_mean": 1.32,
+  "final_std": 1.737124060048677,
+  "init_mean": 1.18,
+  "elapsed_s": 3315.1,
+  "name": "main_gmo_food_baseline",
+  "study": "main"
+}
