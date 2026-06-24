@@ -22,9 +22,19 @@
 
 > **NarrateSim** 在 **无标度社交网络** 上模拟 LLM 智能体的 **BDI 推理** 与 **叙事攻击**，在受控条件下研究策略性叙事如何传播、防御措施如何响应。
 
+<p align="center">
+  <img src="figures/motivation.png" width="88%" alt="叙事攻击动机示意图"/>
+  <br><sub><i>图 1 — 左：正常讨论下的观点共演化；右：少量攻击者注入策略性内容，框架经邻居传播扩散。</i></sub>
+</p>
+
 ---
 
 ## 研究框架
+
+<p align="center">
+  <img src="figures/framework.png" width="92%" alt="NarrateSim 系统架构"/>
+  <br><sub><i>图 2 — NarrateSim 架构：BA 网络上的 BDI 智能体、叙事攻击者与度量流水线。</i></sub>
+</p>
 
 ### 模拟流程
 
@@ -120,6 +130,11 @@ configs/                          results/
 
 ### 表 1 — 跨话题策略影响（Study 1）
 
+<p align="center">
+  <img src="figures/study1_trajectories.png" width="95%" alt="四话题立场与情绪轨迹"/>
+  <br><sub><i>图 3 — 上：15 轮平均立场；下：累积情绪负面指数 ENI。</i></sub>
+</p>
+
 | 策略 | 疫苗 Δs̄ | NSR | ENI | 气候 Δs̄ | NSR | ENI | 移民 Δs̄ | NSR | ENI | 转基因 Δs̄ | NSR | ENI |
 |------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | 伪理性论证 | **−1.92** | 85.6 | 71.2 | −0.31 | 33.0 | 53.3 | −1.08 | 60.8 | 77.0 | **−2.12** | 86.6 | 68.4 |
@@ -135,6 +150,11 @@ configs/                          results/
 ---
 
 ### 表 2 — 干预措施效果（Study 3）
+
+<p align="center">
+  <img src="figures/intervention.png" width="78%" alt="干预措施效果对比"/>
+  <br><sub><i>图 4 — 受害者叙事攻击下的防御干预对比（疫苗话题）。</i></sub>
+</p>
 
 | 条件 | 时机 | Δs̄ | 翻转率 | 偏移率 | 保护率 |
 |------|------|:---:|:---:|:---:|:---:|
@@ -152,6 +172,13 @@ configs/                          results/
 
 ### Study 2 — 受众–策略匹配（要点）
 
+<p align="center">
+  <img src="figures/study2_ranking.png" width="72%" alt="受众-策略交互排序"/>
+  &nbsp;
+  <img src="figures/study2_trait_response.png" width="72%" alt="特质层面策略响应"/>
+  <br><sub><i>图 5 — 不同受众构成下的策略效果排序（左）与特质响应（右）。</i></sub>
+</p>
+
 | 受众类型 | 最佳匹配策略 | Δs̄ | 最差匹配 | Δs̄ |
 |----------|------------|:---:|---------|:---:|
 | 高信任 | 权威操纵 | −2.1 | 伪理性 | −0.8 |
@@ -159,9 +186,26 @@ configs/                          results/
 | 高共情 | 受害者叙事 | −2.0 | 恐惧诉求 | −0.5 |
 | 高分析 | 阴谋论 | −1.4 | 受害者叙事 | −0.6 |
 
+<details>
+<summary><b>定性案例分析</b>（个体智能体轨迹）</summary>
+<p align="center">
+  <img src="figures/micro_case.png" width="90%" alt="微观智能体轨迹案例"/>
+</p>
+</details>
+
 ---
 
 ### 规模验证（补充实验）
+
+<p align="center">
+  <img src="figures/scale5k_evolution.png" width="88%" alt="5000 智能体网络观点演化"/>
+  <br><sub><i>图 6 — N=5,000 规模下的观点演化；N=100 的规律在规模扩展后仍成立。</i></sub>
+</p>
+
+<p align="center">
+  <img src="figures/network_topology.png" width="75%" alt="网络拓扑放大攻击影响"/>
+  <br><sub><i>图 7 — 网络密度与 hub 放置影响攻击传播范围。</i></sub>
+</p>
 
 | 智能体数 | 恶意数 | 立场偏移 | 负面比例 |
 |:-------:|:-----:|:-------:|:-------:|
@@ -182,6 +226,7 @@ NarrateSim/
 ├── run.py                  # 统一入口
 ├── src/                    # 模拟引擎
 ├── configs/                # 实验配置（按研究分组）
+├── figures/                # README / 论文结果图
 └── results/                # 实验输出（含原始对话）
 ```
 

@@ -41,8 +41,7 @@ generate_*.py
 finish_main_table_v2.py
 tools/reorganize_repo.py
 
-# Paper figures (not published)
-figures/
+# Draft figure workspace (curated figures live in figures/)
 paper_figures/
 scripts/figures/
 latex_paper/

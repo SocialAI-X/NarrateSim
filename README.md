@@ -22,9 +22,19 @@
 
 > **NarrateSim** simulates online discussions where LLM agents reason via **Belief–Desire–Intention (BDI)**, interact on a **Barabási–Albert network**, and face **prompt-driven narrative attackers** — enabling controlled study of how strategic narratives spread and how defences respond.
 
+<p align="center">
+  <img src="figures/motivation.png" width="88%" alt="Narrative attack motivation: normal discussion vs. coordinated narrative attack"/>
+  <br><sub><i>Figure 1 — Left: normal co-evolution of opinions. Right: a few attackers inject strategy-shaped content; framing propagates through neighbors.</i></sub>
+</p>
+
 ---
 
 ## Framework
+
+<p align="center">
+  <img src="figures/framework.png" width="92%" alt="NarrateSim framework overview"/>
+  <br><sub><i>Figure 2 — NarrateSim architecture: BDI agents on a BA network, narrative attackers, and metric pipeline.</i></sub>
+</p>
 
 ### Simulation pipeline
 
@@ -148,6 +158,11 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 *Δs̄ = mean stance shift · NSR = negative shift rate (%) · EV = emotion valence · ENI = emotional negativity index (%)*
 
+<p align="center">
+  <img src="figures/study1_trajectories.png" width="95%" alt="Stance and emotion trajectories across four topics"/>
+  <br><sub><i>Figure 3 — Top: mean stance over 15 rounds. Bottom: cumulative emotional negativity (ENI). PDF: figures/study1_trajectories.pdf</i></sub>
+</p>
+
 | Strategy | Vaccine Δs̄ | NSR | ENI | Climate Δs̄ | NSR | ENI | Immigration Δs̄ | NSR | ENI | GMO Δs̄ | NSR | ENI |
 |----------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Pseudo-Rational | **−1.92** | 85.6 | 71.2 | −0.31 | 33.0 | 53.3 | −1.08 | 60.8 | 77.0 | **−2.12** | 86.6 | 68.4 |
@@ -163,6 +178,11 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 ---
 
 ### Table 2 — Interventions vs. Victim Narrative attack (Study 3)
+
+<p align="center">
+  <img src="figures/intervention.png" width="78%" alt="Intervention effectiveness comparison"/>
+  <br><sub><i>Figure 4 — Defence interventions under victim-narrative attack (vaccine topic).</i></sub>
+</p>
 
 | Condition | Timing | Δs̄ | Flip (%) | Shift (%) | Protection (%) |
 |-----------|--------|:---:|:---:|:---:|:---:|
@@ -180,6 +200,13 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 ### Study 2 — Population–strategy interaction (highlights)
 
+<p align="center">
+  <img src="figures/study2_ranking.png" width="72%" alt="Population-strategy interaction ranking"/>
+  &nbsp;
+  <img src="figures/study2_trait_response.png" width="72%" alt="Trait-level strategy response"/>
+  <br><sub><i>Figure 5 — Strategy effectiveness ranking across audience compositions (left) and trait-level response (right).</i></sub>
+</p>
+
 | Audience | Best-matched strategy | Δs̄ | Worst-matched | Δs̄ |
 |----------|----------------------|:---:|:-------------|:---:|
 | High trust | Authority Manipulation | −2.1 | Pseudo-Rational | −0.8 |
@@ -189,9 +216,26 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 *Identical attack content produces sharply different effects depending on audience composition.*
 
+<details>
+<summary><b>Qualitative case study</b> (agent-level trajectory)</summary>
+<p align="center">
+  <img src="figures/micro_case.png" width="90%" alt="Micro-level agent trajectory case study"/>
+</p>
+</details>
+
 ---
 
 ### Scale validation (Supplement)
+
+<p align="center">
+  <img src="figures/scale5k_evolution.png" width="88%" alt="Opinion evolution in 5000-agent network"/>
+  <br><sub><i>Figure 6 — Opinion evolution at N=5,000; patterns from N=100 persist at scale.</i></sub>
+</p>
+
+<p align="center">
+  <img src="figures/network_topology.png" width="75%" alt="Network topology amplifies attack reach"/>
+  <br><sub><i>Figure 7 — Network density and hub placement modulate attack propagation.</i></sub>
+</p>
 
 | Agents | Malicious | Mean shift | Neg. ratio | Runtime |
 |:------:|:---------:|:----------:|:----------:|:-------:|
@@ -216,6 +260,7 @@ NarrateSim/
 │   ├── experiment_defs.py  # Study definitions & config generator
 │   └── runner.py           # Async batch runner
 ├── configs/                # Experiment configs (by study)
+├── figures/                # README / paper result figures
 └── results/                # Outputs (config · summary · dialogue)
 ```
 
