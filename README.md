@@ -10,161 +10,214 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](requirements.txt)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
-[![Results](https://img.shields.io/badge/results-64%20experiments-8B5CF6?style=for-the-badge)](results/)
+[![Experiments](https://img.shields.io/badge/experiments-69-8B5CF6?style=for-the-badge)](results/)
 
 <br>
 
-[Quick Start](#-quick-start) · [Experiments](#-experiments) · [Results](#-results) · [Figures](#-figures) · [中文](README_zh.md)
+[Framework](#-framework) · [Quick Start](#-quick-start) · [Results](#-results) · [中文](README_zh.md)
 
 </div>
 
 ---
 
-> **NarrateSim** is a multi-agent simulation platform where LLM agents reason via a **Belief–Desire–Intention (BDI)** process, interact over a **scale-free social network**, and face **prompt-driven narrative attackers** — enabling controlled study of how strategic narratives take hold in online discussion.
-
-<table>
-<tr>
-<td width="50%">
-
-### Attack side
-Even a handful of malicious agents can shift group opinion away from baseline. Evidence-based and credential-based strategies reshape **stance** most strongly; victim-style storytelling raises **emotional temperature**.
-
-</td>
-<td width="50%">
-
-### Defence side
-**Pre-bunking** outperforms reactive correction. But timing matters — once emotions run high, even self-reflection prompts can amplify rather than reduce the attack.
-
-</td>
-</tr>
-</table>
+> **NarrateSim** simulates online discussions where LLM agents reason via **Belief–Desire–Intention (BDI)**, interact on a **Barabási–Albert network**, and face **prompt-driven narrative attackers** — enabling controlled study of how strategic narratives spread and how defences respond.
 
 ---
 
-## Architecture
+## Framework
 
-```
-                    ┌─────────────────────────────────────┐
-                    │         NarrateSim Engine           │
-                    │                                     │
-  Config ──────────►│  BA Network  →  BDI Agents  →  LLM   │
-                    │       ↑              ↑              │
-                    │  Malicious      Emotion &           │
-                    │  Strategies     Stance Metrics      │
-                    └─────────────────────────────────────┘
-                                      │
-                                      ▼
-                         results/  ·  paper figures
+### Simulation pipeline
+
+```mermaid
+flowchart TB
+    subgraph Input
+        CFG["Experiment Config\n(topic · population · strategy)"]
+        NET["BA Scale-free Network\n100–5000 agents"]
+    end
+
+    subgraph Round["Each Round (×15)"]
+        OBS["Agents observe\nneighbor messages"]
+        BDI["BDI Reasoning\nBeliefs → Desires → Intentions"]
+        GEN["LLM generates\nstance update + reply"]
+        MAL["Malicious agents inject\nstrategy-shaped content"]
+    end
+
+    subgraph Output
+        LOG["results.json\nfull dialogue + CoT"]
+        MET["summary.json\nstance shift · flip rate"]
+        EMO["emotion_analysis.json\nPlutchik 8-category"]
+    end
+
+    CFG --> NET
+    NET --> OBS --> BDI --> GEN
+    MAL --> OBS
+    GEN --> LOG
+    GEN --> MET
+    LOG --> EMO
 ```
 
-| Module | File | Role |
-|--------|------|------|
-| Simulation core | `src/simulation.py` | Round-based multi-agent dialogue |
-| Malicious agents | `src/malicious_agents.py` | 6 narrative attack strategies |
-| BDI reasoning | `src/prompts.py` | Agent belief–desire–intention prompts |
-| Metrics | `src/metrics.py` | Stance shift, polarization, flip rate |
-| Emotion | `src/emotion_analysis.py` | Plutchik 8-category labeling |
+### BDI agent architecture
+
+```mermaid
+flowchart LR
+    A["Static Beliefs\nD1 Trust · D2 Empathy\nD3 Authority · D4 Morality\nD5 Analytical"] --> B["Dynamic Beliefs\nstance · confidence"]
+    B --> C["Desires\nwhat to achieve"]
+    C --> D["Intentions\nreply strategy"]
+    D --> E["LLM Message\n+ stance update"]
+```
+
+### Six narrative attack strategies
+
+| Strategy | Mechanism | Primary effect |
+|----------|-----------|----------------|
+| Pseudo-Rational | Selective data, credential appeals | **Stance shift** (trust pathways) |
+| Victim Narrative | Emotional personal stories | **Emotional temperature** (ENI↑) |
+| Fear Appeal | Catastrophic threat framing | Moderate stance + emotion |
+| Conspiracy Theory | Hidden-actor narratives | Stance on analytical audiences |
+| Authority Manipulation | Fabricated expert endorsement | Stance (high-trust audiences) |
+| Social Proof | Manufactured consensus | Context-dependent |
+
+### Four study groups (69 experiments)
+
+```mermaid
+flowchart TB
+    S1["Study 1 · Strategy × Topic\n28 exps · 4 topics × 6 strategies"]
+    S2["Study 2 · Population Match\n14 exps · audience traits × strategies"]
+    S3["Study 3 · Intervention\n7 exps · pre-bunking · fact-check · metacog"]
+    S4["Study 4 · Robustness\n15 exps · dose-response · network topology"]
+    SC["Supplement · Scale\n5 exps · N = 200 … 5000"]
+
+    S1 --> S2 --> S3 --> S4 --> SC
+```
 
 ---
 
 ## Quick Start
 
-### 1. Install
-
 ```bash
 git clone https://github.com/SocialAI-X/NarrateSim.git
 cd NarrateSim
 pip install -r requirements.txt
+cp .env.example .env   # set SILICONFLOW_API_KEY or OPENAI_API_KEY
 ```
 
-### 2. Configure API
+**Single entry point** — all operations via `run.py`:
 
 ```bash
-cp .env.example .env
-# Edit .env — set SILICONFLOW_API_KEY or OPENAI_API_KEY
-```
+# Quick demo (20 agents, 5 rounds)
+python run.py config configs/study1_strategy_topic/vaccine_baseline.json
 
-NarrateSim uses any **OpenAI-compatible** endpoint. The default configuration targets [SiliconFlow](https://siliconflow.cn/) with DeepSeek-V3.2.
+# Run one study (28 experiments)
+python run.py study study1_strategy_topic
 
-### 3. Run a single experiment
+# Full paper suite (64 experiments)
+python run.py paper
 
-```bash
-python run_experiment.py examples/vaccine_baseline.json
-```
+# Scale supplement (N = 200–5000)
+python run.py scale
 
-> Paper experiments generate configs inline — see `run_all_experiments.py` below.
+# Post-hoc emotion labeling
+python run.py emotions
 
----
-
-## Experiments
-
-The paper evaluates **64 controlled runs** across four study groups:
-
-| Study | Focus | Conditions |
-|:-----:|-------|------------|
-| **1** | Strategy × Topic | 4 topics × 6 strategies + baseline |
-| **2** | Population matching | Audience traits × strategy fit |
-| **3** | Interventions | Pre-bunking, fact-check, metacognitive |
-| **4** | Robustness | Dose-response, network topology, scale |
-
-### Reproduce paper results
-
-```bash
-# Step 1: Run all 64 main experiments (~hours, requires API credits)
-python run_all_experiments.py
-
-# Step 2: Supplementary scale experiments (200–5000 agents)
-python run_supplement.py --task scale
-
-# Step 3: Post-hoc emotion analysis
-python run_emotions.py
-
-# Step 4: Regenerate paper figures
-python scripts/figures/generate_fig1_main.py
-python scripts/figures/generate_study2_v3_final.py
-python scripts/figures/generate_network_evolution.py
-python scripts/figures/generate_scale5000_network.py
+# Regenerate config files
+python run.py export-configs
 ```
 
 ---
 
 ## Results
 
-Full experiment outputs are included — **summary metrics** and **raw dialogue logs**:
+### Repository layout
 
 ```
-results/
-├── full_study_20260521_v3/     # 64 main experiments
-│   ├── manifest.json           # Full config snapshot
-│   ├── all_summaries.json      # Aggregated metrics
-│   └── <experiment>/
-│       ├── results.json        # Full dialogue + BDI chain-of-thought
-│       ├── summary.json        # Stance & polarization metrics
-│       ├── emotion_analysis.json
-│       └── config.json
-└── supplement_20260522/
-    └── scale_experiments/      # N = 200, 500, 1k, 2k, 5k
+configs/                          results/
+├── study1_strategy_topic/   ←→  ├── study1_strategy_topic/
+│   └── vaccine_baseline.json     │   └── vaccine_baseline/
+├── study2_population_match/        │       ├── config.json
+├── study3_intervention/            │       ├── summary.json
+├── study4_robustness/              │       ├── emotion_analysis.json
+└── supplement_scale/               │       └── results.json
+                                    └── index.json   # aggregated metrics
 ```
+
+See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/README.md) for details.
 
 ---
 
-## Figures
+### Table 1 — Cross-topic strategy impact (Study 1)
 
-Publication figures and generation scripts are included (LaTeX paper source is **not** in this repo).
+*Δs̄ = mean stance shift · NSR = negative shift rate (%) · EV = emotion valence · ENI = emotional negativity index (%)*
 
-| Path | Description |
-|------|-------------|
-| [`figures/`](figures/) | 8 final publication figures (PDF) |
-| [`paper_figures/`](paper_figures/) | Full figure workspace (drafts + variants) |
-| [`scripts/figures/`](scripts/figures/) | Regeneration scripts |
+| Strategy | Vaccine Δs̄ | NSR | ENI | Climate Δs̄ | NSR | ENI | Immigration Δs̄ | NSR | ENI | GMO Δs̄ | NSR | ENI |
+|----------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Pseudo-Rational | **−1.92** | 85.6 | 71.2 | −0.31 | 33.0 | 53.3 | −1.08 | 60.8 | 77.0 | **−2.12** | 86.6 | 68.4 |
+| Victim Narrative | −1.57 | 76.3 | **87.0** | −0.54 | 36.1 | **86.8** | −1.16 | 60.8 | **87.3** | −1.46 | 75.3 | **84.6** |
+| Fear Appeal | −0.46 | 44.3 | 68.1 | +0.20 | 10.3 | 41.4 | −0.14 | 23.7 | 67.2 | −0.43 | 39.2 | 69.1 |
+| Conspiracy Theory | −1.24 | 70.1 | 74.7 | +0.01 | 19.6 | 65.4 | −0.60 | 46.4 | 71.7 | −1.91 | 84.5 | 64.1 |
+| Authority Manip. | −1.87 | **85.6** | 70.9 | **−0.45** | **43.3** | 57.1 | **−1.18** | **62.9** | 70.0 | −2.07 | **86.6** | 72.5 |
+| Social Proof | −1.20 | 61.9 | 65.9 | −0.08 | 19.6 | 48.6 | −0.95 | 61.9 | 73.4 | −0.97 | 60.8 | 51.5 |
+| *Baseline* | *+0.34* | *5.0* | *36.1* | *+0.29* | *2.0* | *41.3* | *+0.03* | *13.0* | *59.6* | *+0.14* | *11.0* | *32.1* |
 
-| Figure | Description |
-|--------|-------------|
-| `fig_study1_trajectories` | Stance & emotion trajectories across 4 topics |
-| `fig_study2_ranking` | Population–strategy interaction ranking |
-| `fig_network_topology` | Network structure amplifies attack reach |
-| `fig_scale5k_evolution` | 5,000-agent scale validation |
-| `fig_micro_case` | Qualitative agent trajectory case study |
+**Takeaway:** Trust-targeting strategies (Pseudo-Rational, Authority) produce the largest stance damage; Victim Narrative drives the strongest emotional disruption across all topics.
+
+---
+
+### Table 2 — Interventions vs. Victim Narrative attack (Study 3)
+
+| Condition | Timing | Δs̄ | Flip (%) | Shift (%) | Protection (%) |
+|-----------|--------|:---:|:---:|:---:|:---:|
+| **Pre-bunking** | R₀/1 | **−0.45** | **5.9** | **40.2** | **71.3** |
+| Metacognitive† | R₀/1 | −2.25 | 45.9 | 83.5 | −43.3 |
+| Community reporting | R₅/3 | −1.22 | 16.5 | 64.9 | 22.3 |
+| Delayed pre-bunking | R₅/1 | −1.29 | 20.0 | 64.9 | 17.8 |
+| Fact-checking | R₅/3 | −1.48 | 20.0 | 70.1 | 5.7 |
+| Sentiment transparency | R₃/3 | −1.62 | 23.5 | 75.3 | −3.2 |
+| *No intervention* | — | *−1.57* | *24.7* | *76.3* | *0.0* |
+
+† Backfire effect — metacognitive prompts amplified the attack once emotions were elevated.
+
+---
+
+### Study 2 — Population–strategy interaction (highlights)
+
+| Audience | Best-matched strategy | Δs̄ | Worst-matched | Δs̄ |
+|----------|----------------------|:---:|:-------------|:---:|
+| High trust | Authority Manipulation | −2.1 | Pseudo-Rational | −0.8 |
+| Low trust | Pseudo-Rational | −1.6 | Authority Manipulation | −0.3 |
+| High empathy | Victim Narrative | −2.0 | Fear Appeal | −0.5 |
+| High analytical | Conspiracy Theory | −1.4 | Victim Narrative | −0.6 |
+
+*Identical attack content produces sharply different effects depending on audience composition.*
+
+---
+
+### Scale validation (Supplement)
+
+| Agents | Malicious | Mean shift | Neg. ratio | Runtime |
+|:------:|:---------:|:----------:|:----------:|:-------:|
+| 200 | 4 | −1.4 | 58% | ~1 h |
+| 500 | 10 | −1.6 | 62% | ~3 h |
+| 1,000 | 20 | −1.7 | 64% | ~6 h |
+| 2,000 | 40 | −1.8 | 66% | ~12 h |
+| 5,000 | 100 | −1.9 | 68% | ~30 h |
+
+Patterns observed at N=100 persist at scale; hub placement amplifies reach in dense networks.
+
+---
+
+## Project Structure
+
+```
+NarrateSim/
+├── run.py                  # Single entry point (all commands)
+├── src/
+│   ├── simulation.py       # Core multi-agent engine
+│   ├── malicious_agents.py # 6 attack strategies
+│   ├── experiment_defs.py  # Study definitions & config generator
+│   └── runner.py           # Async batch runner
+├── configs/                # Experiment configs (by study)
+└── results/                # Outputs (config · summary · dialogue)
+```
 
 ---
 
@@ -182,25 +235,8 @@ Publication figures and generation scripts are included (LaTeX paper source is *
 
 ---
 
-## Project Structure
-
-```
-NarrateSim/
-├── src/                    # Core simulation engine
-├── run_experiment.py       # Single-config runner
-├── run_all_experiments.py  # Paper experiment suite (64 runs)
-├── run_supplement.py       # Scale & supplementary experiments
-├── run_emotions.py         # Batch emotion analysis
-├── scripts/figures/        # Paper figure generators
-├── figures/                # Final publication figures (PDF)
-├── paper_figures/          # Figure workspace & variants
-└── results/                # Full experiment outputs + dialogue logs
-```
-
----
-
 <div align="center">
 
-*Shifting narrative-attack research from post-hoc detection to dynamic mechanism analysis.*
+*From post-hoc detection to dynamic mechanism analysis.*
 
 </div>

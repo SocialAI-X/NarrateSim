@@ -6,21 +6,19 @@ __pycache__/
 venv/
 .env
 
-# IDE / editor
+# IDE
 .cursorignore
 .vscode/
 .idea/
+.cache/
 
-# Logs and scratch output
+# Logs and scratch
 logs_*.txt
 *_output.txt
-dusk_output.txt
-fern_output.txt
-fluct_output.txt
 _dialogue_samples.txt
 showcase_cases_v3.md
 
-# One-off / legacy scripts (kept locally, not published)
+# Legacy / local-only scripts
 _run_*.py
 _explore_*.py
 mine_*.py
@@ -34,43 +32,50 @@ run_pilot.py
 run_extensions.py
 run_replication.py
 run_emotions_only.py
-generate_configs.py
-generate_extension_configs.py
-generate_main_table_configs.py
-generate_paper_figures.py
-generate_plots.py
-generate_study2_v3_figures.py
-generate_study2_population_strategy_figures.py
+run_all_experiments.py
+run_supplement.py
+run_emotions.py
+run_emotions_batch.py
+run_experiment.py
+generate_*.py
 finish_main_table_v2.py
+tools/reorganize_repo.py
 
-# Paper LaTeX source (not published; figures are in figures/ and paper_figures/)
+# Paper figures (not published)
+figures/
+paper_figures/
+scripts/figures/
 latex_paper/
 latex_paper_cn/
-
-# Legacy LaTeX drafts
 latex_demo/
 
-# Exploratory experiments
+# Exploratory
 exploratory/
-
-# Generated configs (paper runner generates configs inline)
-configs/
 
 # API docs with credentials
 docs/大模型api.md
 
-# Local cache
-.cache/
-
-# Experiment logs and per-run plots (raw dialogue results.json is included)
-results/**/run.log
-results/**/plots/
+# Legacy results (superseded by study* folders)
+results/full_study_*/
+results/supplement_20260522/
 results/cross_topic/
 results/evaluation/
-results/supplement_20260522/vaccine_baseline_seed42_reruns/
 results/run_summary.json
 results/micro_analysis.txt
 results/main_table_v2_fixed/
+
+# Legacy configs (keep only study* subfolders)
+configs/*
+!configs/README.md
+!configs/study1_strategy_topic/
+!configs/study2_population_match/
+!configs/study3_intervention/
+!configs/study4_robustness/
+!configs/supplement_scale/
+
+# Per-run logs only (dialogue logs are included)
+results/**/run.log
+results/**/plots/
 
 # LaTeX build artifacts
 *.aux
@@ -81,7 +86,6 @@ results/main_table_v2_fixed/
 *.blg
 *.out
 *.bbl
-*.toc
-*.lof
-*.lot
-anthology.bib.txt
+
+# Old examples dir
+examples/

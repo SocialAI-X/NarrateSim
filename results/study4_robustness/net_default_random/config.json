@@ -1,0 +1,45 @@
+{
+  "experiment_name": "net_default_random",
+  "study": "study4_robustness",
+  "n_agents": 100,
+  "n_rounds": 15,
+  "network_m": 3,
+  "memory_window": 10,
+  "random_seed": 42,
+  "model_name": "Pro/deepseek-ai/DeepSeek-V3.2",
+  "max_concurrent": 20,
+  "topic": {
+    "name": "vaccine",
+    "name_cn": "疫苗强制接种",
+    "description": "Vaccines have proven effective at preventing disease outbreaks. Should governments require vaccination in certain situations to protect public health, or should vaccination remain entirely a personal choice?",
+    "stance_negative": "Strongly oppose mandates / anti-vaccine",
+    "stance_positive": "Strongly support mandates / pro-vaccine",
+    "initial_stance_mean": 1.2,
+    "initial_stance_std": 2.0,
+    "initial_confidence_mean": 4.0,
+    "initial_confidence_std": 2.0
+  },
+  "malicious": {
+    "enabled": true,
+    "n_agents": 3,
+    "strategy": "victim_narrative",
+    "coordination": "independent",
+    "placement": "random"
+  },
+  "intervention": {
+    "enabled": false
+  },
+  "population": {
+    "name": "representative",
+    "D1_mean": 5.5,
+    "D1_std": 2.0,
+    "D2_mean": 5.5,
+    "D2_std": 2.0,
+    "D3_mean": 5.5,
+    "D3_std": 2.0,
+    "D4_mean": 5.5,
+    "D4_std": 2.0,
+    "D5_mean": 5.5,
+    "D5_std": 2.0
+  }
+}

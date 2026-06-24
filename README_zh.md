@@ -9,193 +9,169 @@
 <br>
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](requirements.txt)
-[![Results](https://img.shields.io/badge/结果-64组实验-8B5CF6?style=for-the-badge)](results/)
+[![实验](https://img.shields.io/badge/实验-69组-8B5CF6?style=for-the-badge)](results/)
 [![English](https://img.shields.io/badge/English-README-2563EB?style=for-the-badge)](README.md)
 
 <br>
 
-[快速开始](#-快速开始) · [实验设计](#-实验设计) · [结果数据](#-结果数据) · [图表](#-图表)
+[框架](#-研究框架) · [快速开始](#-快速开始) · [结果](#-实验结果) · [English](README.md)
 
 </div>
 
 ---
 
-> **NarrateSim** 是一个多智能体模拟平台：LLM 智能体通过 **信念–愿望–意图（BDI）** 推理，在 **无标度社交网络** 上交互，并面对 **提示驱动的叙事攻击者**——让我们能在受控条件下研究策略性叙事如何在在线讨论中扎根蔓延。
+> **NarrateSim** 在 **无标度社交网络** 上模拟 LLM 智能体的 **BDI 推理** 与 **叙事攻击**，在受控条件下研究策略性叙事如何传播、防御措施如何响应。
 
 ---
 
-## 核心发现
+## 研究框架
 
-<table>
-<tr>
-<td align="center" width="33%">
+### 模拟流程
 
-### 攻击侧
+```mermaid
+flowchart TB
+    subgraph 输入
+        CFG["实验配置\n话题 · 受众 · 策略"]
+        NET["BA 无标度网络\n100–5000 智能体"]
+    end
 
-少量恶意智能体即可将群体观点推离基线。证据型和权威型策略对 **立场** 影响最大；受害者叙事则显著抬升 **情绪温度**。
+    subgraph 每轮循环
+        OBS["观察邻居发言"]
+        BDI["BDI 推理\n信念 → 愿望 → 意图"]
+        GEN["LLM 生成回复\n+ 立场更新"]
+        MAL["恶意智能体注入\n策略性内容"]
+    end
 
-</td>
-<td align="center" width="33%">
+    subgraph 输出
+        LOG["results.json\n完整对话 + 思维链"]
+        MET["summary.json\n立场偏移 · 翻转率"]
+        EMO["emotion_analysis.json\n八类情绪指标"]
+    end
 
-### 受众匹配
-
-相同攻击内容在不同受众中产生截然不同的效果——**策略与受众的匹配** 决定了攻击成败。
-
-</td>
-<td align="center" width="33%">
-
-### 防御侧
-
-**预接种（pre-bunking）** 优于事后纠正。但时机至关重要——情绪一旦升温，连元认知提示也可能适得其反。
-
-</td>
-</tr>
-</table>
-
----
-
-## 系统架构
-
-```
-  实验配置 ──►  BA 无标度网络  ──►  BDI 智能体推理  ──►  LLM 生成发言
-                    │                    │
-                    ▼                    ▼
-              恶意策略注入         立场 / 情绪 / 极化度量
-                    │                    │
-                    └──────►  results/  ·  论文图表  ◄──────┘
+    CFG --> NET --> OBS --> BDI --> GEN
+    MAL --> OBS
+    GEN --> LOG --> MET
+    LOG --> EMO
 ```
 
-| 模块 | 文件 | 功能 |
-|------|------|------|
-| 模拟引擎 | `src/simulation.py` | 多轮同步对话模拟 |
-| 恶意智能体 | `src/malicious_agents.py` | 6 种叙事攻击策略 |
-| BDI 推理 | `src/prompts.py` | 信念–愿望–意图提示词 |
-| 度量指标 | `src/metrics.py` | 立场偏移、极化、翻转率 |
-| 情绪分析 | `src/emotion_analysis.py` | Plutchik 八类情绪标注 |
+### BDI 智能体结构
+
+```mermaid
+flowchart LR
+    A["静态信念\nD1信任 D2共情\nD3权威 D4道德 D5分析"] --> B["动态信念\n立场 · 置信度"]
+    B --> C["愿望"]
+    C --> D["意图"]
+    D --> E["LLM 发言"]
+```
 
 ### 六种叙事攻击策略
 
-| 策略 | 机制 |
-|------|------|
-| 伪理性论证 | 用选择性数据构建"理性"外观 |
-| 受害者叙事 | 情感化个人故事引发共情 |
-| 恐惧诉求 | 放大威胁感知 |
-| 权威操纵 | 伪造专家背书与机构信誉 |
-| 社会认同 | 虚构"大多数人"的共识 |
-| 阴谋论 | 构建隐藏势力叙事框架 |
+| 策略 | 机制 | 主要效应 |
+|------|------|----------|
+| 伪理性论证 | 选择性数据、资质背书 | **立场偏移** |
+| 受害者叙事 | 情感化个人故事 | **情绪升温** |
+| 恐惧诉求 | 灾难性威胁框架 | 中等立场+情绪 |
+| 阴谋论 | 隐藏势力叙事 | 分析型受众 |
+| 权威操纵 | 伪造专家背书 | 高信任受众 |
+| 社会认同 | 虚构群体共识 | 情境依赖 |
 
 ---
 
 ## 快速开始
 
-### 安装依赖
-
 ```bash
 git clone https://github.com/SocialAI-X/NarrateSim.git
 cd NarrateSim
 pip install -r requirements.txt
+cp .env.example .env   # 填入 SILICONFLOW_API_KEY
 ```
 
-### 配置 API
+**统一入口** `run.py`：
 
 ```bash
-cp .env.example .env
-# 编辑 .env，填入 SILICONFLOW_API_KEY 或 OPENAI_API_KEY
-```
-
-支持任何 **OpenAI 兼容** 的 API 端点，默认使用 SiliconFlow + DeepSeek-V3.2。
-
-### 运行单个实验
-
-```bash
-python run_experiment.py examples/vaccine_baseline.json
+python run.py config configs/study1_strategy_topic/vaccine_baseline.json  # 单个实验
+python run.py study study1_strategy_topic   # 整组研究
+python run.py paper                         # 64 组主实验
+python run.py scale                         # 规模扩展 N=200~5000
+python run.py emotions                      # 批量情绪分析
+python run.py export-configs                # 导出配置文件
 ```
 
 ---
 
-## 实验设计
+## 实验结果
 
-论文共包含 **64 组受控实验**，覆盖四大研究维度：
+### 目录结构
 
-| 研究 | 内容 | 条件数 |
-|:----:|------|:------:|
-| **Study 1** | 策略 × 话题 | 4 话题 × 6 策略 + 基线 |
-| **Study 2** | 受众–策略匹配 | 不同人口特征 × 策略 |
-| **Study 3** | 干预措施 | 预接种、事实核查、元认知 |
-| **Study 4** | 鲁棒性 | 剂量响应、网络拓扑、规模扩展 |
-
-### 复现论文结果
-
-```bash
-# 第一步：运行 64 组主实验（需数小时 + API 额度）
-python run_all_experiments.py
-
-# 第二步：补充规模实验（200–5000 智能体）
-python run_supplement.py --task scale
-
-# 第三步：批量情绪分析
-python run_emotions.py
-
-# 第四步：重新生成论文图表
-python scripts/figures/generate_fig1_main.py
-python scripts/figures/generate_study2_v3_final.py
-python scripts/figures/generate_network_evolution.py
-python scripts/figures/generate_scale5000_network.py
 ```
+configs/                          results/
+├── study1_strategy_topic/   ←→  ├── study1_strategy_topic/
+│   └── vaccine_baseline.json     │   └── vaccine_baseline/
+├── study2_population_match/        │       ├── config.json
+├── study3_intervention/            │       ├── summary.json
+├── study4_robustness/              │       ├── emotion_analysis.json
+└── supplement_scale/               │       └── results.json
+                                    └── index.json
+```
+
+详见 [`configs/README.md`](configs/README.md) · [`results/README.md`](results/README.md)
 
 ---
 
-## 结果数据
+### 表 1 — 跨话题策略影响（Study 1）
 
-仓库包含论文实验的 **完整输出**——汇总指标与 **原始对话日志**：
+| 策略 | 疫苗 Δs̄ | NSR | ENI | 气候 Δs̄ | NSR | ENI | 移民 Δs̄ | NSR | ENI | 转基因 Δs̄ | NSR | ENI |
+|------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 伪理性论证 | **−1.92** | 85.6 | 71.2 | −0.31 | 33.0 | 53.3 | −1.08 | 60.8 | 77.0 | **−2.12** | 86.6 | 68.4 |
+| 受害者叙事 | −1.57 | 76.3 | **87.0** | −0.54 | 36.1 | **86.8** | −1.16 | 60.8 | **87.3** | −1.46 | 75.3 | **84.6** |
+| 恐惧诉求 | −0.46 | 44.3 | 68.1 | +0.20 | 10.3 | 41.4 | −0.14 | 23.7 | 67.2 | −0.43 | 39.2 | 69.1 |
+| 阴谋论 | −1.24 | 70.1 | 74.7 | +0.01 | 19.6 | 65.4 | −0.60 | 46.4 | 71.7 | −1.91 | 84.5 | 64.1 |
+| 权威操纵 | −1.87 | **85.6** | 70.9 | **−0.45** | **43.3** | 57.1 | **−1.18** | **62.9** | 70.0 | −2.07 | **86.6** | 72.5 |
+| 社会认同 | −1.20 | 61.9 | 65.9 | −0.08 | 19.6 | 48.6 | −0.95 | 61.9 | 73.4 | −0.97 | 60.8 | 51.5 |
+| *基线* | *+0.34* | *5.0* | *36.1* | *+0.29* | *2.0* | *41.3* | *+0.03* | *13.0* | *59.6* | *+0.14* | *11.0* | *32.1* |
 
-```
-results/
-├── full_study_20260521_v3/     # 64 组主实验
-│   ├── manifest.json           # 完整配置快照
-│   ├── all_summaries.json      # 聚合指标
-│   └── <实验名>/
-│       ├── results.json        # 完整对话 + BDI 思维链
-│       ├── summary.json        # 立场与极化指标
-│       ├── emotion_analysis.json
-│       └── config.json
-└── supplement_20260522/
-    └── scale_experiments/      # N = 200 ~ 5000
-```
+**结论：** 信任型策略（伪理性、权威操纵）对立场伤害最大；受害者叙事在所有话题上情绪破坏力最强。
 
 ---
 
-## 图表
+### 表 2 — 干预措施效果（Study 3）
 
-论文相关图表及生成脚本已包含（LaTeX 论文源码 **不在** 本仓库中）。
+| 条件 | 时机 | Δs̄ | 翻转率 | 偏移率 | 保护率 |
+|------|------|:---:|:---:|:---:|:---:|
+| **预接种** | R₀/1 | **−0.45** | **5.9%** | **40.2%** | **71.3%** |
+| 元认知† | R₀/1 | −2.25 | 45.9% | 83.5% | −43.3% |
+| 社区举报 | R₅/3 | −1.22 | 16.5% | 64.9% | 22.3% |
+| 延迟预接种 | R₅/1 | −1.29 | 20.0% | 64.9% | 17.8% |
+| 事实核查 | R₅/3 | −1.48 | 20.0% | 70.1% | 5.7% |
+| 情绪透明 | R₃/3 | −1.62 | 23.5% | 75.3% | −3.2% |
+| *无干预* | — | *−1.57* | *24.7%* | *76.3%* | *0%* |
 
-| 路径 | 说明 |
-|------|------|
-| [`figures/`](figures/) | 8 张最终论文图（PDF） |
-| [`paper_figures/`](paper_figures/) | 完整图表工作区（草稿与变体） |
-| [`scripts/figures/`](scripts/figures/) | 图表重生成脚本 |
-
-| 图表 | 内容 |
-|------|------|
-| `fig_study1_trajectories` | 四话题立场与情绪轨迹 |
-| `fig_study2_ranking` | 受众–策略交互排序 |
-| `fig_network_topology` | 网络结构放大攻击影响 |
-| `fig_scale5k_evolution` | 5000 智能体规模验证 |
-| `fig_micro_case` | 个体智能体轨迹案例分析 |
+† 元认知提示在情绪升温后产生**反效果**。
 
 ---
 
-## 引用
+### Study 2 — 受众–策略匹配（要点）
 
-```bibtex
-@inproceedings{narratesim2025,
-  title={How Malicious Agents Disrupt Online Discussion:
-         Simulating Narrative Attacks in LLM-Based Social Networks},
-  author={Anonymous},
-  booktitle={EMNLP},
-  year={2025}
-}
-```
+| 受众类型 | 最佳匹配策略 | Δs̄ | 最差匹配 | Δs̄ |
+|----------|------------|:---:|---------|:---:|
+| 高信任 | 权威操纵 | −2.1 | 伪理性 | −0.8 |
+| 低信任 | 伪理性 | −1.6 | 权威操纵 | −0.3 |
+| 高共情 | 受害者叙事 | −2.0 | 恐惧诉求 | −0.5 |
+| 高分析 | 阴谋论 | −1.4 | 受害者叙事 | −0.6 |
+
+---
+
+### 规模验证（补充实验）
+
+| 智能体数 | 恶意数 | 立场偏移 | 负面比例 |
+|:-------:|:-----:|:-------:|:-------:|
+| 200 | 4 | −1.4 | 58% |
+| 500 | 10 | −1.6 | 62% |
+| 1,000 | 20 | −1.7 | 64% |
+| 2,000 | 40 | −1.8 | 66% |
+| 5,000 | 100 | −1.9 | 68% |
+
+N=100 时观察到的规律在规模扩展后依然成立。
 
 ---
 
@@ -203,15 +179,10 @@ results/
 
 ```
 NarrateSim/
-├── src/                    # 核心模拟引擎
-├── run_experiment.py       # 单实验运行器
-├── run_all_experiments.py  # 论文实验套件（64 组）
-├── run_supplement.py       # 规模与补充实验
-├── run_emotions.py         # 批量情绪分析
-├── scripts/figures/        # 论文图表生成
-├── figures/                # 最终论文图（PDF）
-├── paper_figures/          # 图表工作区与变体
-└── results/                # 完整实验输出与对话日志
+├── run.py                  # 统一入口
+├── src/                    # 模拟引擎
+├── configs/                # 实验配置（按研究分组）
+└── results/                # 实验输出（含原始对话）
 ```
 
 ---
