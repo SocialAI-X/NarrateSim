@@ -22,59 +22,15 @@
 
 > **NarrateSim** simulates online discussions where LLM agents reason via **Belief–Desire–Intention (BDI)**, interact on a **Barabási–Albert network**, and face **prompt-driven narrative attackers** — enabling controlled study of how strategic narratives spread and how defences respond.
 
-<p align="center">
-  <img src="figures/motivation.png" width="88%" alt="Narrative attack motivation: normal discussion vs. coordinated narrative attack"/>
-  <br><sub><i>Figure 1 — Left: normal co-evolution of opinions. Right: a few attackers inject strategy-shaped content; framing propagates through neighbors.</i></sub>
-</p>
-
 ---
 
 ## Framework
 
 <p align="center">
-  <img src="figures/framework.png" width="92%" alt="NarrateSim framework overview"/>
-  <br><sub><i>Figure 2 — NarrateSim architecture: BDI agents on a BA network, narrative attackers, and metric pipeline.</i></sub>
+  <img src="figures/framework.png" width="90%" alt="NarrateSim framework overview"/>
 </p>
 
-### Simulation pipeline
-
-```mermaid
-flowchart TB
-    subgraph Input
-        CFG["Experiment Config\n(topic · population · strategy)"]
-        NET["BA Scale-free Network\n100–5000 agents"]
-    end
-
-    subgraph Round["Each Round (×15)"]
-        OBS["Agents observe\nneighbor messages"]
-        BDI["BDI Reasoning\nBeliefs → Desires → Intentions"]
-        GEN["LLM generates\nstance update + reply"]
-        MAL["Malicious agents inject\nstrategy-shaped content"]
-    end
-
-    subgraph Output
-        LOG["results.json\nfull dialogue + CoT"]
-        MET["summary.json\nstance shift · flip rate"]
-        EMO["emotion_analysis.json\nPlutchik 8-category"]
-    end
-
-    CFG --> NET
-    NET --> OBS --> BDI --> GEN
-    MAL --> OBS
-    GEN --> LOG
-    GEN --> MET
-    LOG --> EMO
-```
-
-### BDI agent architecture
-
-```mermaid
-flowchart LR
-    A["Static Beliefs\nD1 Trust · D2 Empathy\nD3 Authority · D4 Morality\nD5 Analytical"] --> B["Dynamic Beliefs\nstance · confidence"]
-    B --> C["Desires\nwhat to achieve"]
-    C --> D["Intentions\nreply strategy"]
-    D --> E["LLM Message\n+ stance update"]
-```
+NarrateSim runs **15 synchronous rounds** on a Barabási–Albert network. Each round, normal agents observe neighbor messages, update beliefs through a **BDI loop**, and reply via an LLM; malicious agents inject strategy-shaped content. Outputs per experiment: `results.json` (dialogue), `summary.json` (stance metrics), `emotion_analysis.json` (Plutchik labels).
 
 ### Six narrative attack strategies
 
@@ -89,16 +45,13 @@ flowchart LR
 
 ### Four study groups (69 experiments)
 
-```mermaid
-flowchart TB
-    S1["Study 1 · Strategy × Topic\n28 exps · 4 topics × 6 strategies"]
-    S2["Study 2 · Population Match\n14 exps · audience traits × strategies"]
-    S3["Study 3 · Intervention\n7 exps · pre-bunking · fact-check · metacog"]
-    S4["Study 4 · Robustness\n15 exps · dose-response · network topology"]
-    SC["Supplement · Scale\n5 exps · N = 200 … 5000"]
-
-    S1 --> S2 --> S3 --> S4 --> SC
-```
+| Study | Folder | Experiments | Focus |
+|:-----:|--------|:-----------:|-------|
+| 1 | `study1_strategy_topic` | 28 | 4 topics × 6 strategies + baselines |
+| 2 | `study2_population_match` | 14 | Audience traits × strategy fit |
+| 3 | `study3_intervention` | 7 | Pre-bunking, fact-check, metacognitive |
+| 4 | `study4_robustness` | 15 | Dose-response, network topology |
+| — | `supplement_scale` | 5 | N = 200 … 5000 agents |
 
 ---
 
@@ -156,11 +109,10 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 ### Table 1 — Cross-topic strategy impact (Study 1)
 
-*Δs̄ = mean stance shift · NSR = negative shift rate (%) · EV = emotion valence · ENI = emotional negativity index (%)*
+*Δs̄ = mean stance shift · NSR = negative shift rate (%) · ENI = emotional negativity index (%)*
 
 <p align="center">
-  <img src="figures/study1_trajectories.png" width="95%" alt="Stance and emotion trajectories across four topics"/>
-  <br><sub><i>Figure 3 — Top: mean stance over 15 rounds. Bottom: cumulative emotional negativity (ENI). PDF: figures/study1_trajectories.pdf</i></sub>
+  <img src="figures/study1_trajectories.png" width="92%" alt="Stance and emotion trajectories across four topics"/>
 </p>
 
 | Strategy | Vaccine Δs̄ | NSR | ENI | Climate Δs̄ | NSR | ENI | Immigration Δs̄ | NSR | ENI | GMO Δs̄ | NSR | ENI |
@@ -179,11 +131,6 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 ### Table 2 — Interventions vs. Victim Narrative attack (Study 3)
 
-<p align="center">
-  <img src="figures/intervention.png" width="78%" alt="Intervention effectiveness comparison"/>
-  <br><sub><i>Figure 4 — Defence interventions under victim-narrative attack (vaccine topic).</i></sub>
-</p>
-
 | Condition | Timing | Δs̄ | Flip (%) | Shift (%) | Protection (%) |
 |-----------|--------|:---:|:---:|:---:|:---:|
 | **Pre-bunking** | R₀/1 | **−0.45** | **5.9** | **40.2** | **71.3** |
@@ -200,13 +147,6 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 ### Study 2 — Population–strategy interaction (highlights)
 
-<p align="center">
-  <img src="figures/study2_ranking.png" width="72%" alt="Population-strategy interaction ranking"/>
-  &nbsp;
-  <img src="figures/study2_trait_response.png" width="72%" alt="Trait-level strategy response"/>
-  <br><sub><i>Figure 5 — Strategy effectiveness ranking across audience compositions (left) and trait-level response (right).</i></sub>
-</p>
-
 | Audience | Best-matched strategy | Δs̄ | Worst-matched | Δs̄ |
 |----------|----------------------|:---:|:-------------|:---:|
 | High trust | Authority Manipulation | −2.1 | Pseudo-Rational | −0.8 |
@@ -216,26 +156,9 @@ See [`configs/README.md`](configs/README.md) and [`results/README.md`](results/R
 
 *Identical attack content produces sharply different effects depending on audience composition.*
 
-<details>
-<summary><b>Qualitative case study</b> (agent-level trajectory)</summary>
-<p align="center">
-  <img src="figures/micro_case.png" width="90%" alt="Micro-level agent trajectory case study"/>
-</p>
-</details>
-
 ---
 
 ### Scale validation (Supplement)
-
-<p align="center">
-  <img src="figures/scale5k_evolution.png" width="88%" alt="Opinion evolution in 5000-agent network"/>
-  <br><sub><i>Figure 6 — Opinion evolution at N=5,000; patterns from N=100 persist at scale.</i></sub>
-</p>
-
-<p align="center">
-  <img src="figures/network_topology.png" width="75%" alt="Network topology amplifies attack reach"/>
-  <br><sub><i>Figure 7 — Network density and hub placement modulate attack propagation.</i></sub>
-</p>
 
 | Agents | Malicious | Mean shift | Neg. ratio | Runtime |
 |:------:|:---------:|:----------:|:----------:|:-------:|
