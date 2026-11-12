@@ -10,12 +10,14 @@ Each subdirectory is one experiment run. File layout is identical across all stu
 └── results.json           # Full dialogue logs + BDI chain-of-thought
 ```
 
-| Folder | Experiments | Paper section |
-|--------|:-----------:|---------------|
-| `study1_strategy_topic/` | 28 | Table 1 — strategy × topic |
-| `study2_population_match/` | 14 | Study 2 — audience matching |
-| `study3_intervention/` | 7 | Table 2 — interventions |
-| `study4_robustness/` | 15 | Dose-response + network |
-| `supplement_scale/` | 5 | Appendix — scale validation |
+| Folder | Runs | Where it appears |
+|--------|:----:|------------------|
+| `study1_strategy_topic/` | 28 | Paper Table 1 (RQ1): 6 strategies + no attack x 4 topics |
+| `study3_intervention/` | 7 | Paper Table 2 (RQ2): interventions vs. Victim Narrative |
+| `study4_robustness/` | 15 | Paper Fig. 4 (`net_*`, attacker placement); project page (`dose_*`, attacker count) |
+| `study2_population_match/` | 14 | Project page: audience composition |
+| `supplement_scale/` | 5 | Project page: N = 200 ... 5,000 |
+
+Recompute the paper tables from these files (no API key needed): `python run.py tables`.
 
 Aggregated metrics: [`index.json`](index.json)

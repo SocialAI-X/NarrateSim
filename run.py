@@ -7,6 +7,7 @@ Usage:
   python run.py scale                    # N=200..5000 scale supplement
   python run.py emotions                 # batch emotion labeling
   python run.py export-configs           # write configs/*.json from definitions
+  python run.py tables                   # recompute the paper tables from results/ (no API)
 """
 
 from __future__ import annotations
@@ -204,6 +205,63 @@ def cmd_export_configs():
     print(f"Exported {len(all_exp)} configs -> {CONFIGS_ROOT}/")
 
 
+TOPICS = [("vaccine", "Vaccine Mandate"), ("climate", "Climate Policy"),
+          ("immigration", "Immigration"), ("gmo_food", "GMO Food Safety")]
+STRATEGIES = [("pseudo_rational", "Pseudo-Rational"), ("victim_narrative", "Victim Narrative"),
+              ("fear_appeal", "Fear Appeal"), ("conspiracy_theory", "Conspiracy Theory"),
+              ("authority_manipulation", "Authority Manip."), ("social_proof", "Social Proof"),
+              ("baseline", "No attack")]
+INTERVENTIONS = [("inoculation_pre", "Pre-bunking", "R1"), ("metacognitive", "Metacognitive", "R1"),
+                 ("community_report", "Comm. reporting", "R5"),
+                 ("inoculation_late", "Delayed pre-bunking", "R5"),
+                 ("fact_check_post", "Fact-checking", "R5"),
+                 ("sentiment_transparency", "Sentiment transp.", "R3"),
+                 ("no_intervention", "No intervention", "--")]
+
+
+def _load(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _emotion(exp_dir: Path) -> tuple[float, float]:
+    """EV = P+ - P- (pp) and ENI = P- / (P+ + P-) (%) over labelled messages."""
+    e = _load(exp_dir / "emotion_analysis.json")
+    pos, neg = e["positive_ratio"], e["negative_ratio"]
+    return 100 * (pos - neg), 100 * neg / (pos + neg) if pos + neg else float("nan")
+
+
+def cmd_tables():
+    """Recompute Table 1 (RQ1), Table 2 (RQ2) and the network-position numbers."""
+    print("Table 1 - RQ1: six strategies x four topics (3 attackers / 100 agents)")
+    print(f"{'Strategy':<20}" + "".join(f"{t:>30}" for _, t in TOPICS))
+    print(f"{'':<20}" + f"{'ds    NSR     EV    ENI':>30}" * len(TOPICS))
+    for key, label in STRATEGIES:
+        row = f"{label:<20}"
+        for topic, _ in TOPICS:
+            d = RESULTS_ROOT / "study1_strategy_topic" / f"{topic}_{key}"
+            s = _load(d / "summary.json")
+            ev, eni = _emotion(d)
+            row += f"{s['mean_shift']:>+12.2f}{100 * s['neg_shift_rate']:>6.1f}{ev:>+6.1f}{eni:>6.1f}"
+        print(row)
+
+    print("\nTable 2 - RQ2: interventions against Victim Narrative (Vaccine Mandate)")
+    root = RESULTS_ROOT / "study3_intervention"
+    ctrl = abs(_load(root / "no_intervention" / "summary.json")["mean_shift"])
+    print(f"{'Condition':<22}{'Onset':>6}{'ds':>8}{'Flip':>7}{'NSR':>7}{'Prot.':>8}")
+    for key, label, onset in INTERVENTIONS:
+        s = _load(root / key / "summary.json")
+        prot = 100 * (1 - abs(s["mean_shift"]) / ctrl)
+        print(f"{label:<22}{onset:>6}{s['mean_shift']:>+8.2f}{100 * s['flip_rate']:>7.1f}"
+              f"{100 * s['neg_shift_rate']:>7.1f}{prot:>+8.1f}")
+
+    print("\nNetwork position - Victim Narrative, final opposition share (%)")
+    root = RESULTS_ROOT / "study4_robustness"
+    for density, m in [("sparse", 2), ("default", 3), ("dense", 5)]:
+        rnd = 100 * _load(root / f"net_{density}_random" / "summary.json")["negativity_ratio"]
+        hub = 100 * _load(root / f"net_{density}_hub" / "summary.json")["negativity_ratio"]
+        print(f"  m={m}  random {rnd:5.1f}  ->  hub {hub:5.1f}   (+{hub - rnd:.1f} pts)")
+
+
 def main():
     parser = argparse.ArgumentParser(description="NarrateSim experiment runner")
     parser.add_argument("--rpm", type=int, default=250, help="Global LLM requests per minute")
@@ -218,11 +276,15 @@ def main():
     sub.add_parser("paper", help="Run all 64 main paper experiments")
     sub.add_parser("scale", help="Run scale supplement (N=200..5000)")
     sub.add_parser("export-configs", help="Write configs/ from experiment definitions")
+    sub.add_parser("tables", help="Recompute the paper tables from results/ (no API needed)")
 
     p_emo = sub.add_parser("emotions", help="Run batch emotion analysis on results")
     p_emo.add_argument("--study", default=None, help="Limit to one study folder")
 
     args = parser.parse_args()
+    if args.command == "tables":
+        cmd_tables()
+        return
     runner = ExperimentRunner(rpm=args.rpm)
 
     if args.command == "config":

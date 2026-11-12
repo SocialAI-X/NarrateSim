@@ -88,3 +88,14 @@ results/**/plots/
 
 # Old examples dir
 examples/
+
+# Local-only material (paper sources, notes, templates, page build script)
+latex_paper_*/
+WWW2027_short_template/
+project_page/
+allinone.md
+scripts/
+.claude/
+
+# docs/ is the published project page (GitHub Pages); keep local notes out
+docs/*.md

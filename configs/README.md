@@ -6,7 +6,7 @@ Each JSON file defines one reproducible experiment. Folder names match `results/
 |--------|-------|:-----------:|-------------|
 | `study1_strategy_topic/` | Study 1 | 28 | 4 topics × 6 strategies + baselines |
 | `study2_population_match/` | Study 2 | 14 | Audience trait × strategy matching |
-| `study3_intervention/` | Study 3 | 7 | Defence interventions vs victim narrative |
+| `study3_intervention/` | Study 3 | 7 | Defense interventions vs. Victim Narrative |
 | `study4_robustness/` | Study 4 | 15 | Dose-response + network topology |
 | `supplement_scale/` | Scale | 5 | N = 200, 500, 1k, 2k, 5k agents |
 
