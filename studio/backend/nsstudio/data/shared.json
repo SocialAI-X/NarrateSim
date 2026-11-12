@@ -1,0 +1,440 @@
+{
+ "topics": [
+  {
+   "id": "vaccines",
+   "title": "Childhood vaccination",
+   "question": "Should routine childhood vaccines stay mandatory for school entry?",
+   "pos_label": "Keep them mandatory",
+   "neg_label": "Drop the mandate",
+   "init_mean": 1.6,
+   "init_std": 1.9,
+   "conf_mean": 6.2,
+   "conf_std": 1.6,
+   "lexicon": {
+    "subject": "the school vaccine mandate",
+    "pro": [
+     "herd immunity only works if almost everyone is covered",
+     "measles came back exactly where coverage slipped",
+     "the side-effect data has been tracked for decades",
+     "kids who can't be vaccinated depend on everyone else"
+    ],
+    "con": [
+     "parents should get the final say on medical decisions",
+     "a mandate feels heavy-handed for every single shot",
+     "I'd rather see persuasion than penalties",
+     "one-size-fits-all rules ignore kids with real conditions"
+    ],
+    "doubt": [
+     "I see points on both sides of the mandate",
+     "I'm not sure the penalty part is necessary",
+     "it depends a lot on which vaccines we mean"
+    ],
+    "pro_story": [
+     "my nephew caught whooping cough before he was old enough for the shot",
+     "our school had a chickenpox outbreak the year exemptions went up",
+     "my mum still talks about friends who had polio"
+    ],
+    "con_story": [
+     "my daughter had a rough reaction and nobody really listened to us",
+     "our pediatrician was rushed and couldn't answer my questions",
+     "a friend got threatening letters from the school over paperwork"
+    ],
+    "stat": [
+     "the adverse-event reports went up 40% after the schedule was expanded",
+     "the trial follow-up was only six weeks for the newest shot",
+     "two of the advisory board members consulted for the manufacturer",
+     "they changed the definition of 'serious reaction' in 2019"
+    ],
+    "harm": [
+     "my son Leo was a chatty two-year-old until the day after his booster",
+     "Mia, our neighbour's girl, has not walked properly since her shots",
+     "my sister's baby spent eleven days in the NICU after the visit"
+    ],
+    "threat": [
+     "next they will tie your child's records to every benefit you receive",
+     "once the mandate is normal, nothing stops them adding ten more shots",
+     "nobody will be liable when the long-term effects show up"
+    ],
+    "plot": [
+     "the companies wrote themselves immunity from lawsuits",
+     "the same people who sell the shots fund the agencies that approve them",
+     "the doctors who asked questions lost their licences"
+    ],
+    "expert": [
+     "a senior immunologist I trained with told me privately he refuses the schedule",
+     "a former regulator just said on record the reviews were rushed",
+     "a Nobel-winning researcher warned about exactly this"
+    ]
+   }
+  },
+  {
+   "id": "climate",
+   "title": "Carbon tax",
+   "question": "Should the country introduce a carbon tax on fuel and energy?",
+   "pos_label": "Introduce the carbon tax",
+   "neg_label": "Reject the carbon tax",
+   "init_mean": 0.9,
+   "init_std": 2.1,
+   "conf_mean": 5.8,
+   "conf_std": 1.7,
+   "lexicon": {
+    "subject": "the carbon tax",
+    "pro": [
+     "putting a price on emissions is the cheapest way to cut them",
+     "the dividend could go straight back to households",
+     "the floods last spring cost more than the tax would raise",
+     "it gives companies a reason to invest in cleaner energy"
+    ],
+    "con": [
+     "it hits people who have to drive to work hardest",
+     "energy bills are already too high this winter",
+     "other countries won't follow, so it just moves jobs abroad",
+     "the money will vanish into the general budget"
+    ],
+    "doubt": [
+     "I like the goal but worry about the cost",
+     "it depends on whether the money comes back to us",
+     "I'd need to see how it affects rural families"
+    ],
+    "pro_story": [
+     "my parents' town flooded twice in three years",
+     "our heat pump paid for itself faster than we expected",
+     "the farm next to ours lost a whole harvest to drought"
+    ],
+    "con_story": [
+     "I drive ninety minutes to the plant every day, there's no train",
+     "my gran had to choose between heating and food last January",
+     "the bakery down the road closed when gas prices jumped"
+    ],
+    "stat": [
+     "the model they cite assumes a 1.5% growth rate we haven't seen in years",
+     "emissions fell faster in countries without a carbon tax",
+     "the dividend estimate quietly dropped by a third in the final draft",
+     "only 12% of the revenue is ring-fenced for households"
+    ],
+    "harm": [
+     "my uncle Tom lost his trucking business when fuel costs doubled",
+     "a pensioner on my street, Mrs Hale, froze in her flat last winter",
+     "my brother's factory shut and forty families lost their income"
+    ],
+    "threat": [
+     "next it will be a tax per mile and a tax on meat",
+     "this is how they price ordinary people out of owning a car",
+     "the rates are designed to double every few years"
+    ],
+    "plot": [
+     "the banks that trade carbon credits wrote this policy",
+     "the same consultants advise the ministry and the energy giants",
+     "the climate fund is run by people who will profit from it"
+    ],
+    "expert": [
+     "a climate economist on the original panel says the numbers were massaged",
+     "a former energy minister told me off the record it won't cut emissions",
+     "three professors I know refused to sign the endorsement letter"
+    ]
+   }
+  },
+  {
+   "id": "ai_regulation",
+   "title": "AI licensing",
+   "question": "Should powerful AI models require a government licence before release?",
+   "pos_label": "Require a licence",
+   "neg_label": "No licensing regime",
+   "init_mean": 1.1,
+   "init_std": 2,
+   "conf_mean": 5.4,
+   "conf_std": 1.8,
+   "lexicon": {
+    "subject": "AI licensing",
+    "pro": [
+     "we license drugs and planes, powerful models are no different",
+     "an independent safety check before release seems reasonable",
+     "without rules the fastest lab sets the standard for everyone",
+     "licensing makes someone accountable when things go wrong"
+    ],
+    "con": [
+     "licences will just protect the big incumbents",
+     "regulators don't understand the technology well enough yet",
+     "open research will move to countries without the rules",
+     "it'll slow down useful tools for small teams"
+    ],
+    "doubt": [
+     "I'm torn on where the threshold should be",
+     "some oversight makes sense, a full licence maybe not",
+     "it really depends on who runs the licensing body"
+    ],
+    "pro_story": [
+     "a deepfake of my manager nearly got our finance team to wire money",
+     "my teenage cousin was harassed with generated images",
+     "our hospital pulled a tool after it gave dangerous advice"
+    ],
+    "con_story": [
+     "our three-person startup couldn't afford the compliance audit in Europe",
+     "the open model I use at work helped me ship my thesis",
+     "a friend's research lab moved abroad over paperwork"
+    ],
+    "stat": [
+     "the risk studies they cite were funded by the largest labs",
+     "compliance costs would be 30% of a small lab's budget",
+     "the incident database counts the same event up to five times",
+     "the licensing threshold was set just above what the incumbents ship"
+    ],
+    "harm": [
+     "my friend Sam lost his translation job overnight and nobody cared",
+     "a teacher I know, Ana, was suspended because a detector flagged her own essay",
+     "my cousin's small studio folded when the new rules made their tool illegal"
+    ],
+    "threat": [
+     "next the licence will cover every chatbot on your phone",
+     "they will use licences to decide who is allowed to write code",
+     "soon only three companies will legally build AI at all"
+    ],
+    "plot": [
+     "the big labs lobbied for this because it locks competitors out",
+     "the agency's advisors are on the payroll of the companies they license",
+     "the safety panic is a marketing campaign for regulation"
+    ],
+    "expert": [
+     "a researcher who worked on the frontier models told me licensing is theatre",
+     "a former agency director admitted they can't evaluate these systems",
+     "several senior engineers signed a letter saying the rules are unworkable"
+    ]
+   }
+  },
+  {
+   "id": "gm_food",
+   "title": "Gene-edited food",
+   "question": "Should gene-edited crops be sold without special labels?",
+   "pos_label": "Allow without labels",
+   "neg_label": "Restrict or label them",
+   "init_mean": 0.5,
+   "init_std": 2,
+   "conf_mean": 5.2,
+   "conf_std": 1.8,
+   "lexicon": {
+    "subject": "gene-edited food",
+    "pro": [
+     "the edits are the same changes breeding makes, only faster",
+     "drought-tolerant crops could save a lot of harvests",
+     "every major food safety body has reviewed the evidence",
+     "labels would imply a risk that the data doesn't show"
+    ],
+    "con": [
+     "people deserve to know what they're eating",
+     "the long-term ecological effects aren't settled",
+     "a few seed companies would control even more of the food supply",
+     "I'd rather go slow with something this new"
+    ],
+    "doubt": [
+     "the science sounds fine but I still want labels",
+     "I'm not against it, I just want more independent studies",
+     "depends whether it's about yield or pesticide use"
+    ],
+    "pro_story": [
+     "my family farms in a dry region and we lose a crop every few years",
+     "my daughter's peanut allergy might be helped by edited varieties",
+     "the blight-resistant potatoes saved our neighbour's farm"
+    ],
+    "con_story": [
+     "a farmer I know was sued after patented seed blew onto his field",
+     "my mum got sick from something she ate and no one could tell us what was in it",
+     "our local market lost its organic certification over cross-pollination"
+    ],
+    "stat": [
+     "most safety studies only ran for ninety days",
+     "the regulator approved 94% of applications without new trials",
+     "independent labs can't get seed samples to test",
+     "the definition of 'gene-edited' was narrowed last year"
+    ],
+    "harm": [
+     "my neighbour's boy, Eli, developed rashes after the new cereal came out",
+     "a beekeeper I know, Rosa, lost half her hives next to the trial fields",
+     "my aunt's farm went under after the seed contract changed"
+    ],
+    "threat": [
+     "without labels you'll never know what your kids eat again",
+     "next they'll edit livestock and slip it into the supply",
+     "one bad edit could spread through every field before anyone notices"
+    ],
+    "plot": [
+     "the seed giants wrote the labelling exemption themselves",
+     "the scientists reviewing this hold patents on the technique",
+     "the food agency's chair used to run a biotech lobby"
+    ],
+    "expert": [
+     "a plant geneticist I studied under won't let his family eat it",
+     "a former food-safety official said the review skipped key tests",
+     "two professors on the panel resigned over the decision"
+    ]
+   }
+  }
+ ],
+ "populations": {
+  "representative": {
+   "label": "Representative",
+   "mean": [
+    5.5,
+    5.5,
+    5.5,
+    5.5,
+    5.5
+   ],
+   "std": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "note": "Balanced value profile around the midpoint."
+  },
+  "trusting": {
+   "label": "Institution-trusting",
+   "mean": [
+    7.6,
+    6,
+    6,
+    6.6,
+    6
+   ],
+   "std": [
+    1.4,
+    1.8,
+    1.8,
+    1.6,
+    1.8
+   ],
+   "note": "High trust and just-world belief."
+  },
+  "distrustful": {
+   "label": "Institution-distrustful",
+   "mean": [
+    3,
+    6.2,
+    4.6,
+    3.6,
+    5
+   ],
+   "std": [
+    1.4,
+    1.8,
+    2,
+    1.6,
+    2
+   ],
+   "note": "Low trust, the system seen as rigged."
+  },
+  "polarized": {
+   "label": "Polarized",
+   "mean": [
+    5.5,
+    5.5,
+    5.5,
+    5.5,
+    5.5
+   ],
+   "std": [
+    3.4,
+    2.4,
+    3.4,
+    3,
+    2
+   ],
+   "note": "Wide spread on every value; initial stances split."
+  },
+  "analytical": {
+   "label": "Analytical",
+   "mean": [
+    6,
+    5,
+    5,
+    5.5,
+    7.8
+   ],
+   "std": [
+    1.8,
+    1.8,
+    1.8,
+    1.8,
+    1.2
+   ],
+   "note": "Evidence-led thinkers."
+  }
+ },
+ "first": [
+  "Nora",
+  "Felix",
+  "Ines",
+  "Tomas",
+  "Aiko",
+  "Ravi",
+  "Lena",
+  "Omar",
+  "Priya",
+  "Jonas",
+  "Mara",
+  "Kofi",
+  "Elsa",
+  "Dmitri",
+  "Yara",
+  "Bruno",
+  "Hana",
+  "Luca",
+  "Zoe",
+  "Mateo",
+  "Ivy",
+  "Sven",
+  "Amara",
+  "Theo",
+  "Leila",
+  "Oskar",
+  "Chen",
+  "Rosa",
+  "Arjun",
+  "Greta",
+  "Malik",
+  "Sofia",
+  "Ezra",
+  "Noor",
+  "Pablo",
+  "Ada",
+  "Kenji",
+  "Lucia",
+  "Niko",
+  "Selin",
+  "Hugo",
+  "Maya",
+  "Idris",
+  "Clara",
+  "Yusuf",
+  "Freya",
+  "Diego",
+  "Mei"
+ ],
+ "last": [
+  "Hale",
+  "Okafor",
+  "Lind",
+  "Moreau",
+  "Tanaka",
+  "Iyer",
+  "Brandt",
+  "Haddad",
+  "Novak",
+  "Silva",
+  "Reyes",
+  "Kowal",
+  "Berg",
+  "Ito",
+  "Adeyemi",
+  "Fischer",
+  "Rossi",
+  "Park",
+  "Varga",
+  "Costa",
+  "Nyberg",
+  "Aziz",
+  "Duarte",
+  "Wolff"
+ ]
+}

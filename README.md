@@ -11,8 +11,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-2E7D32?style=flat-square)](LICENSE)
 [![Runs](https://img.shields.io/badge/released%20runs-69-6A4C93?style=flat-square)](results/)
 [![Project page](https://img.shields.io/badge/project%20page-extended%20results-1F4E79?style=flat-square)](https://anonymous.4open.science/w/NarrateSim-014B/)
+[![Studio](https://img.shields.io/badge/NarrateSim%20Studio-try%20it%20in%20the%20browser-D9A441?style=flat-square)](https://anonymous.4open.science/w/NarrateSim-014B/studio/)
 
-[Overview](#overview) · [Framework](#framework) · [Results](#results) · [Reproduce](#reproduce) · [Repository](#repository-layout) · [Project page](https://anonymous.4open.science/w/NarrateSim-014B/) · [中文](README_zh.md)
+[Overview](#overview) · [Framework](#framework) · [Results](#results) · [Studio](#narratesim-studio) · [Reproduce](#reproduce) · [Repository](#repository-layout) · [Project page](https://anonymous.4open.science/w/NarrateSim-014B/) · [中文](README_zh.md)
+
+<a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/"><img src="docs/assets/studio/lab.png" alt="NarrateSim Studio: a 120-agent society under a narrative operation, defended by a Guardian classifier" width="100%"></a>
+<sub><b>NarrateSim Studio</b>, the experiment platform released with the paper: plant an operation, switch on a defense, and measure the effect against a counterfactual twin. <a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/">Try it in the browser</a> · <a href="#narratesim-studio">more</a></sub>
 
 </div>
 
@@ -158,6 +162,45 @@ leaves out:
 
 ---
 
+## NarrateSim Studio
+
+<p align="center"><b>An open simulator of LLM-agent social networks for narrative attacks and defenses.</b><br>
+<a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/">Open the console</a> (runs in the browser, no install) · <a href="studio/README.md">Studio documentation</a></p>
+
+The studio is a standalone experiment platform built on the paper's simulation idea. Plant a coordinated
+operation in a society of agents, switch on a defense, and measure what it changed against a twin world
+without it.
+
+- **Two minds, one protocol.** LLM agents write a belief–desire–intention trace and a JSON decision on any
+  OpenAI-compatible model (DeepSeek, OpenAI, vLLM). A calibrated heuristic mind fills the same fields in
+  milliseconds, so a 120-agent run takes about 40 ms in the browser.
+- **Counterfactual twins and forks.** All randomness is a hash of (seed, round, agent), so the baseline,
+  attacked and defended twins share every draw the treatment does not touch, and any run can be branched after
+  any round with one change. Attack effect and protection are differences between twins.
+- **Six framings, four coordination modes, four placements; seven defenses with real errors.** Prebunking,
+  fact-checks, community notes, a Guardian classifier that labels, downranks or removes, suspensions,
+  reflection prompts, climate reports. Detectors flag honest people too, and the studio counts it.
+- **Cascades, sweeps, timing curves.** Every stance change is attributed to the post that caused it (direct vs.
+  second-hand). Factor × factor sweeps with 95% intervals; protection as a function of defense onset.
+- **Engineering.** React/TypeScript console with a Web Worker sweep engine; Python package with FastAPI +
+  WebSocket service, LLM gateway and CLI; the two engines agree frame for frame (checked by parity tests).
+
+<table>
+<tr><td width="50%"><img src="docs/assets/studio/feed_reasoning.png" alt="Feed with belief-desire-intention traces"><br><sub><b>The feed, with reasoning.</b> Every post carries its author's belief–desire–intention trace; operation posts are tagged with their framing.</sub></td><td width="50%"><img src="docs/assets/studio/agent_inspector.png" alt="Agent inspector"><br><sub><b>One agent across the twins:</b> its stance in each world, its values, whom it moved and what it wrote.</sub></td></tr>
+<tr><td width="50%"><img src="docs/assets/studio/cascade.png" alt="Cascade tracer"><br><sub><b>Cascades:</b> 41% of the operation's reach is second-hand, carried by honest agents.</sub></td><td width="50%"><img src="docs/assets/studio/sweeps.png" alt="Sweeps"><br><sub><b>Sweeps:</b> framing × audience with 95% intervals, 360 simulations in ~2 s.</sub></td></tr>
+<tr><td width="50%"><img src="docs/assets/studio/command_palette.png" alt="Command palette"><br><sub><b>Command palette</b> (Ctrl K): jump anywhere or run any preset.</sub></td><td width="50%"><img src="docs/assets/studio/method.png" alt="Method page"><br><sub><b>Method:</b> the model written out equation by equation, as the code runs it.</sub></td></tr>
+</table>
+
+<p align="center"><img src="docs/assets/studio/counterfactuals.png" alt="Counterfactuals: gap to twin, forks, defense timing curve" width="88%"><br><sub><b>Counterfactuals and forks:</b> branch any run after any round with one change; protection as a function of defense onset.</sub></p>
+
+```bash
+cd studio/web && npm install && npm run dev                      # console, heuristic engine
+cd studio/backend && pip install -e ".[dev]" && narratesim serve  # API + LLM agents (see .env.example)
+narratesim run hub-victim                                         # CLI, with twins
+```
+
+---
+
 ## Reproduce
 
 ```bash
@@ -204,7 +247,9 @@ NarrateSim/
 │   └── experiment_defs.py       # every condition of the paper
 ├── configs/<study>/<run>.json   # one file per run (seeded)
 ├── results/<study>/<run>/       # config · summary · emotion_analysis · results (full dialogue + BDI traces)
-└── figures/                     # paper figures used in this README
+├── figures/                     # paper figures used in this README
+├── studio/                      # NarrateSim Studio: API + engine (backend/), console (web/)
+└── docs/                        # project page; docs/studio/ is the browser-only console
 ```
 
 | Folder | Runs | Used for |

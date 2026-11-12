@@ -61,6 +61,15 @@ footer{color:var(--muted);text-align:center;font-size:14px;padding:30px 16px;bor
 .stat .rq{font:600 11px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 pre.bib,pre.cmd{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13px/1.5 ui-monospace,Consolas,monospace}
 @media (max-width:640px){body{font-size:15.5px}header{padding-top:36px}.stat .num{font-size:24px}}
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.shots figure{margin:0}.shots figure img,figure.wide img{background:#131217}
+.shots figcaption{font-size:13.5px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 4px}
+.cta a{display:inline-block;padding:9px 18px;border-radius:999px;text-decoration:none;font:600 14px/1 system-ui,sans-serif;border:1px solid var(--line);color:var(--fg);background:var(--card)}
+.cta a.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:4px 28px;margin:10px 0 0;padding:0;list-style:none}
+.feat li{margin:6px 0;font-size:15.5px}
+@media (max-width:640px){.shots{grid-template-columns:1fr}}
 </style></head>
 <body>
 <header>
@@ -68,7 +77,7 @@ pre.bib,pre.cmd{background:var(--code);border:1px solid var(--line);border-radiu
 <h1>Steering the Consensus: Narrative Attacks and Timed Defenses in LLM-Agent Social Networks</h1>
 <p class="authors">Anonymous Author(s)</p>
 <p class="sub">Companion page of an anonymous submission. It collects every result, prompt and dialogue case that the four-page paper could not hold.</p>
-<div class="links"><a class="primary" href="https://anonymous.4open.science/r/NarrateSim-014B">Code</a><a href="https://anonymous.4open.science/r/NarrateSim-014B/results">All run outputs</a><a href="#attack">Results</a><a href="#prompts">Prompts</a><a href="#dialogues">Dialogue cases</a><a href="#cite">BibTeX</a></div>
+<div class="links"><a class="primary" href="studio/">Open the interactive studio</a><a href="https://anonymous.4open.science/r/NarrateSim-014B">Code</a><a href="https://anonymous.4open.science/r/NarrateSim-014B/results">All run outputs</a><a href="#attack">Results</a><a href="#prompts">Prompts</a><a href="#dialogues">Dialogue cases</a><a href="#cite">BibTeX</a></div>
 </header>
 <div class="tldr">
 <p class="lead"><b>TL;DR.</b> In a society of 100 LLM agents, three attackers with ordinary posting rights can redirect the collective stance when framing, topic and network position align. On the defense side, <em>when</em> a safeguard starts matters more than <em>what</em> it says.</p>
@@ -79,7 +88,7 @@ pre.bib,pre.cmd{background:var(--code);border:1px solid var(--line);border-radiu
 <div class="stat warn"><div class="rq">RQ2 &middot; Backfire</div><div class="num">&minus;17%</div><div class="lbl">protection from a metacognitive prompt: the society ends worse off than with no defense</div></div>
 </div>
 </div>
-<nav><a href="#overview">Overview</a><a href="#attack">RQ1 Attack</a><a href="#audience">Audience composition</a><a href="#dose">Attacker count</a><a href="#network">Network position</a><a href="#scale">Scale</a><a href="#defense">RQ2 Defense</a><a href="#setup">Setup details</a><a href="#prompts">Prompts</a><a href="#dialogues">Dialogues</a><a href="#data">Code &amp; data</a><a href="#cite">Cite</a></nav>
+<nav><a href="#overview">Overview</a><a href="#studio">Studio</a><a href="#attack">RQ1 Attack</a><a href="#audience">Audience composition</a><a href="#dose">Attacker count</a><a href="#network">Network position</a><a href="#scale">Scale</a><a href="#defense">RQ2 Defense</a><a href="#setup">Setup details</a><a href="#prompts">Prompts</a><a href="#dialogues">Dialogues</a><a href="#data">Code &amp; data</a><a href="#cite">Cite</a></nav>
 <main>
 
 <section id="overview"><h2>Overview</h2>
@@ -87,6 +96,31 @@ pre.bib,pre.cmd{background:var(--code);border:1px solid var(--line);border-radiu
 <div class="note"><b>Scope.</b> All results describe societies of LLM agents. They are not presented as estimates for any human population; implications for human platforms are hypotheses at most.</div>
 <figure><img src="assets/motivation.png" alt="Agents exchange arguments over a social network and their stances co-evolve (left); narrative attacker agents inject crafted framings that spread through neighbours (right)" loading="lazy"><figcaption>Agents exchange arguments over a social network and their stances co-evolve (left); narrative attacker agents inject crafted framings that spread through neighbours (right).</figcaption></figure>
 <figure><img src="assets/framework.png" alt="Overview of NarrateSim: (a) a normal agent with belief, memory/BDI reasoning and action modules; (b) synchronous local message exchange over a scale-free network; (c) narrative attackers, interventions and controlled conditions" loading="lazy"><figcaption>Overview of NarrateSim: (a) a normal agent with belief, memory/BDI reasoning and action modules; (b) synchronous local message exchange over a scale-free network; (c) narrative attackers, interventions and controlled conditions.</figcaption></figure>
+</section>
+
+<section id="studio"><h2>NarrateSim Studio: the system behind the paper</h2>
+<p>Alongside the paper we built <b>NarrateSim Studio</b>, an open experiment platform for LLM-agent societies under narrative attack. It turns the paper's method into a workbench: design a society, an operation and a defense, watch the discussion spread over the network post by post, and measure every effect against a <em>counterfactual twin</em> that shares all random draws but lacks the operation (or the defense). It runs entirely in the browser, and a Python service runs the same engine with LLM agents on any OpenAI-compatible model.</p>
+<div class="cta"><a class="primary" href="studio/">Open the studio (runs in your browser)</a><a href="studio/#/method">Read the model</a><a href="https://anonymous.4open.science/r/NarrateSim-014B/studio">Studio source</a></div>
+<figure class="wide"><img src="assets/studio/lab.png" alt="The Lab: scenario designer, the live network coloured by stance with operation accounts ringed in amber and suspended ones crossed out, headline effects against the twins, and the feed with moderation labels" loading="lazy"><figcaption><b>The Lab.</b> A 120-agent society under a victim-narrative operation on the hubs, defended by a Guardian classifier that downranks flagged posts. Headline numbers are measured against the twins: the operation alone moves the society 1.54 stance points; the defense removes 86% of that. Operation accounts are ringed in amber; suspended accounts are crossed out.</figcaption></figure>
+<div class="shots">
+<figure><img src="assets/studio/feed_reasoning.png" alt="The feed: every post with its author's belief, desire and intention" loading="lazy"><figcaption><b>The feed, with reasoning.</b> Every post carries its author&rsquo;s belief&ndash;desire&ndash;intention trace; operation posts are tagged with their framing and, optionally, revealed as such.</figcaption></figure>
+<figure><img src="assets/studio/agent_inspector.png" alt="Agent inspector: an agent's stance in each twin, its values, who it moved and its posts" loading="lazy"><figcaption><b>One agent across the twins.</b> Its stance in the baseline, attacked and defended worlds, its value profile, whom it moved and what it wrote.</figcaption></figure>
+<figure><img src="assets/studio/cascade.png" alt="Cascade view: people moved directly by the operation versus second-hand through honest neighbours" loading="lazy"><figcaption><b>Cascades.</b> Every stance change is attributed to the post that caused it. Under an engagement-ranked feed, 41% of the operation&rsquo;s reach is second-hand, carried by honest agents.</figcaption></figure>
+<figure><img src="assets/studio/sweeps.png" alt="Sweeps: attack effect by framing and value profile with 95% intervals over seeds" loading="lazy"><figcaption><b>Sweeps.</b> Framing &times; audience grids replicated over seeds with 95% intervals; 360 simulations in about two seconds in a Web Worker.</figcaption></figure>
+<figure><img src="assets/studio/landing.png" alt="Studio front page with a live 150-agent simulation and a defense switcher" loading="lazy"><figcaption><b>A live demo on the front page.</b> A 150-agent society runs in the page itself; switch between no defense, early or late prebunking and Guardian.</figcaption></figure>
+<figure><img src="assets/studio/command_palette.png" alt="Command palette over the Lab" loading="lazy"><figcaption><b>Command palette.</b> Ctrl&nbsp;K jumps to any page or runs any preset scenario.</figcaption></figure>
+<figure><img src="assets/studio/method.png" alt="Method page with the model written out" loading="lazy"><figcaption><b>The model, written out.</b> Every equation and coefficient of the round, as the code runs it.</figcaption></figure>
+<figure><img src="assets/studio/settings.png" alt="Settings: LLM transport, model and concurrency" loading="lazy"><figcaption><b>LLM settings.</b> Use the Python gateway (the key stays on the server) or call an OpenAI-compatible endpoint directly; DeepSeek by default.</figcaption></figure>
+</div>
+<figure class="wide"><img src="assets/studio/counterfactuals.png" alt="Counterfactuals page: gap to the baseline twin, who was moved by value, a fork that switches prebunking on after round 6, and protection as a function of defense onset" loading="lazy"><figcaption><b>Counterfactuals and forks.</b> Branch any run after any round with one change, and trace protection as a function of the round a defense starts.</figcaption></figure>
+<ul class="feat">
+<li><b>Six framings</b>, four coordination modes, placement on hubs, bridges, at random or on the periphery.</li>
+<li><b>Seven defenses</b> with onset and strength: prebunking, fact-checks, community notes, Guardian, suspension, reflection prompts, climate reports.</li>
+<li><b>Two minds, one protocol</b>: BDI LLM agents on any OpenAI-compatible model (DeepSeek by default), or a calibrated heuristic mind that runs a 120-agent society in about 40&nbsp;ms.</li>
+<li><b>Two engines, one result</b>: the browser (TypeScript) and Python engines agree frame for frame, checked by parity tests.</li>
+<li><b>Server and CLI</b>: FastAPI with WebSocket streaming, an LLM gateway that keeps keys off the browser, headless runs and sweeps.</li>
+<li><b>Open data format</b>: every run is one JSON file with the scenario, graph, posts, reasoning and per-round metrics.</li>
+</ul>
 </section>
 
 <section id="attack"><h2>RQ1 &middot; Narrative attacks across topics</h2>
@@ -869,6 +903,7 @@ Respond with ONLY JSON:
 <pre class="cmd">pip install -r requirements.txt
 python run.py tables          # Table 1, Table 2 and the network-position numbers, from results/
 python run.py config configs/study1_strategy_topic/vaccine_victim_narrative.json   # re-run one condition (needs an API key)</pre>
+<p>The interactive studio lives in <code>studio/</code> (console in <code>studio/web</code>, Python engine, API and CLI in <code>studio/backend</code>); see <a href="#studio">NarrateSim Studio</a> above.</p>
 <ul><li>Code: <a href="https://anonymous.4open.science/r/NarrateSim-014B">https://anonymous.4open.science/r/NarrateSim-014B</a></li><li>Run outputs: <a href="https://anonymous.4open.science/r/NarrateSim-014B/results">https://anonymous.4open.science/r/NarrateSim-014B/results</a></li></ul>
 <p>Generated excerpts that mention real institutions, publications or individuals are replaced with typed placeholders (&lt;ORG&gt;, &lt;JOURNAL&gt;, &lt;PERSON&gt;).</p>
 </section>

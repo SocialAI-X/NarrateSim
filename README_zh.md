@@ -10,8 +10,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-2E7D32?style=flat-square)](LICENSE)
 [![Runs](https://img.shields.io/badge/公开运行-69组-6A4C93?style=flat-square)](results/)
 [![Project page](https://img.shields.io/badge/项目主页-扩展结果-1F4E79?style=flat-square)](https://anonymous.4open.science/w/NarrateSim-014B/)
+[![Studio](https://img.shields.io/badge/NarrateSim%20Studio-浏览器内直接体验-D9A441?style=flat-square)](https://anonymous.4open.science/w/NarrateSim-014B/studio/)
 
-[概述](#概述) · [框架](#框架) · [结果](#结果) · [复现](#复现) · [项目主页](https://anonymous.4open.science/w/NarrateSim-014B/) · [English](README.md)
+[概述](#概述) · [框架](#框架) · [结果](#结果) · [实验平台](#narratesim-studio-实验平台) · [复现](#复现) · [项目主页](https://anonymous.4open.science/w/NarrateSim-014B/) · [English](README.md)
+
+<a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/"><img src="docs/assets/studio/lab.png" alt="NarrateSim Studio：120 个智能体的社会遭受叙事操纵，并由 Guardian 分类器防御" width="100%"></a>
+<sub>随论文发布的实验平台 <b>NarrateSim Studio</b>：植入操纵行动、开启防御，并与反事实孪生世界对比度量效果。<a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/">在浏览器中体验</a> · <a href="#narratesim-studio-实验平台">详细介绍</a></sub>
 
 </div>
 
@@ -85,6 +89,35 @@ LLM 智能体已经以参与者身份进入 Web。在纯智能体社交平台上
 <sub>\* 倾向型干预；† 适得其反。</sub>
 
 受众构成、攻击者数量的剂量效应、N = 5,000 规模实验、完整提示词和对话案例，见[项目主页](https://anonymous.4open.science/w/NarrateSim-014B/)。
+
+## NarrateSim Studio 实验平台
+
+<p align="center"><a href="https://anonymous.4open.science/w/NarrateSim-014B/studio/">打开在线控制台</a>（浏览器内运行，无需安装）· <a href="studio/README.md">平台文档</a></p>
+
+Studio 是一套独立的、由大模型智能体驱动的社交网络叙事模拟系统：在智能体社会中植入协同操纵行动，开启防御，
+并与"没有该行动"的孪生世界对比，直接度量其影响。
+
+- **双心智，同一协议。** LLM 智能体在任意 OpenAI 兼容模型（DeepSeek、OpenAI、vLLM）上输出信念–愿望–意图（BDI）推理与 JSON 决策；
+  校准的启发式心智以毫秒级填充相同字段，120 个智能体的一次运行在浏览器中约 40 毫秒。
+- **反事实孪生与分叉。** 所有随机数都是（种子, 轮次, 智能体）的哈希，基线、受攻击、受防御三个孪生世界共享处理之外的全部随机抽样；
+  任意轮次之后都可以改动一处并分叉。攻击效应与保护率即孪生之间的差值。
+- **6 种叙事框架、4 种协同模式、4 种部署位置；7 种会犯真实错误的防御。** 预先免疫、事实核查、社区笔记、可标注/降权/删除的 Guardian 分类器、封号、反思提示、讨论氛围报告。
+- **传播级联、批量扫描、时机曲线。** 每次立场变化都归因到引发它的帖子（直接 vs. 二手传播）；双因素扫描带 95% 置信区间；保护率随防御起始轮次变化的曲线。
+- **工程实现。** React/TypeScript 控制台与 Web Worker 扫描引擎；Python 包含 FastAPI + WebSocket 服务、LLM 网关与命令行；两套引擎逐帧一致（有一致性测试校验）。
+
+<table>
+<tr><td width="50%"><img src="docs/assets/studio/feed_reasoning.png" alt="带 BDI 推理的信息流"><br><sub><b>信息流与推理。</b>每条帖子都附带作者的信念–愿望–意图推理，操纵帖子标注其叙事框架。</sub></td><td width="50%"><img src="docs/assets/studio/agent_inspector.png" alt="智能体检查器"><br><sub><b>同一个智能体在三个孪生世界中：</b>立场轨迹、价值观、影响了谁、发了什么。</sub></td></tr>
+<tr><td width="50%"><img src="docs/assets/studio/cascade.png" alt="传播级联"><br><sub><b>传播级联：</b>操纵行动 41% 的影响是经由普通智能体二手传播的。</sub></td><td width="50%"><img src="docs/assets/studio/sweeps.png" alt="批量扫描"><br><sub><b>批量扫描：</b>叙事框架 × 受众，带 95% 置信区间，约 2 秒完成 360 次仿真。</sub></td></tr>
+<tr><td width="50%"><img src="docs/assets/studio/command_palette.png" alt="命令面板"><br><sub><b>命令面板</b>（Ctrl K）：快速跳转或运行任意预设场景。</sub></td><td width="50%"><img src="docs/assets/studio/method.png" alt="方法页"><br><sub><b>方法页：</b>逐条写出模型公式，与代码运行一致。</sub></td></tr>
+</table>
+
+<p align="center"><img src="docs/assets/studio/counterfactuals.png" alt="反事实对比、分叉与防御时机曲线" width="88%"><br><sub><b>反事实与分叉：</b>在任意轮次之后改动一处并分叉；保护率随防御起始轮次变化的曲线。</sub></p>
+
+```bash
+cd studio/web && npm install && npm run dev
+cd studio/backend && pip install -e ".[dev]" && narratesim serve
+narratesim run hub-victim
+```
 
 ## 复现
 

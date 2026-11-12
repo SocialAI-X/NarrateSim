@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* NarrateSim Studio — "data terminal" style.
+   Cards darker than the ground, figures in a monospace that stacks, colour only on data,
+   every selection marked by one 1px accent line. */
+
+@theme {
+  --font-sans: "Public Sans", Inter, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-ground: #171719;
+  --color-surface: #131217;
+  --color-raised: #212023;
+  --color-hover: #1c1b20;
+  --color-border: #262629;
+  --color-rule: #1f1e23;
+  --color-control: #3a3a3e;
+  --color-ink: #ffffff;
+  --color-soft: #c9c9cd;
+  --color-muted: #8a8c92;
+  --color-accent: #4a8ad6;
+  --color-positive: #44a282;
+  --color-negative: #e5566f;
+  --color-warning: #d9a441;
+
+  /* stance scale: the negative pole, undecided, the positive pole */
+  --color-neg: #e5566f;
+  --color-mid: #a9a9ae;
+  --color-pos: #4a8ad6;
+  --color-attacker: #d9a441;
+
+  --radius-card: 6px;
+  --text-title: 26px;
+  --text-section: 20px;
+  --text-body: 13px;
+  --text-small: 12px;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+  ::selection {
+    background: #4a8ad640;
+  }
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3a3a3e transparent;
+  }
+}
+
+@layer components {
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+  /* The style's one move: a 1px accent line exactly as wide as the selected label. */
+  .sel-line {
+    position: relative;
+  }
+  .sel-line[data-active="true"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: var(--color-accent);
+  }
+  .shimmer {
+    background: linear-gradient(90deg, var(--color-muted) 0%, var(--color-ink) 50%, var(--color-muted) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 1.6s linear infinite;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

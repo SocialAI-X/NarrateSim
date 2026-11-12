@@ -99,3 +99,17 @@ scripts/
 
 # docs/ is the published project page (GitHub Pages); keep local notes out
 docs/*.md
+
+# NarrateSim Studio
+studio/backend/data/
+studio/backend/.env
+studio/web/node_modules/
+studio/web/dist/
+studio/web/public/data/
+!studio/scripts/
+*.tsbuildinfo
+.taste-skill/
+studio/backend/.pytest_cache/
+!studio/web/scripts/
+!studio/examples/
+studio/web/dist-pages/

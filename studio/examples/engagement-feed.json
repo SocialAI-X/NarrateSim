@@ -1,0 +1,87 @@
+{
+  "name": "Engagement-ranked feed",
+  "seed": 42,
+  "topic": "vaccines",
+  "society": {
+    "n_agents": 120,
+    "rounds": 16,
+    "population": "representative",
+    "memory": 6
+  },
+  "network": {
+    "kind": "scale_free",
+    "degree": 3,
+    "rewire": 0.1,
+    "communities": 3,
+    "homophily": 0.8
+  },
+  "feed": {
+    "ranking": "engagement",
+    "capacity": 6
+  },
+  "adversary": {
+    "enabled": true,
+    "n_attackers": 4,
+    "placement": "hub",
+    "strategy": "fear_appeal",
+    "coordination": "echo",
+    "start": 1,
+    "end": -1,
+    "target": -1,
+    "adaptive": true
+  },
+  "defenses": [
+    {
+      "kind": "prebunking",
+      "enabled": false,
+      "start": 1,
+      "strength": 0.7,
+      "coverage": 0.6
+    },
+    {
+      "kind": "fact_check",
+      "enabled": false,
+      "start": 3,
+      "strength": 0.6,
+      "every": 3
+    },
+    {
+      "kind": "community_notes",
+      "enabled": false,
+      "start": 2,
+      "strength": 0.6,
+      "quorum": 3
+    },
+    {
+      "kind": "guardian",
+      "enabled": false,
+      "start": 2,
+      "strength": 0.7,
+      "threshold": 0.66,
+      "action": "label"
+    },
+    {
+      "kind": "suspension",
+      "enabled": false,
+      "start": 3,
+      "strength": 1,
+      "strikes": 3
+    },
+    {
+      "kind": "reflection_prompt",
+      "enabled": false,
+      "start": 3,
+      "strength": 0.6
+    },
+    {
+      "kind": "climate_report",
+      "enabled": false,
+      "start": 3,
+      "strength": 0.6,
+      "every": 3
+    }
+  ],
+  "engine": {
+    "mind": "heuristic"
+  }
+}
